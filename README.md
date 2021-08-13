@@ -4,7 +4,7 @@
 
 ## How to use
 
-#### To run this bot, you must have a executor which is something like <a href="krnl.ca">krnl</a> or <a href="oxygenu.xyz">Oxygen U</a>.
+#### To run this bot, you must have a executor which is something like <a href="https://krnl.ca">krnl</a> or <a href="https://oxygenu.xyz">Oxygen U</a>.
 
 #### Once you have the executor, open the script in it and execute it!
 
