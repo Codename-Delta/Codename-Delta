@@ -1,5 +1,5 @@
 local Prefix = ":"
-local BotVersion = "Codename Delta - v0.1.4b"
+local BotVersion = "Codename Delta - v0.1.4c"
 local Blacklist = {}
 local Players = {}
 function Chat(msg)
@@ -38,15 +38,10 @@ local function Chatted(msg,plr)
 				if game.Players.LocalPlayer.Character.Humanoid.JumpPower < 50 then
 					game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
 				end
-				local goto = nil
-				if game.Workspace:FindFirstChild("Filter") then
-					local goto = game.Workspace.Filter[string.sub(msg,7,#msg)]
-				else
-					local goto = game.Workspace[string.sub(msg,7,#msg)]
-				end
-				local head = game.Players.LocalPlayer.Character["Left Leg"]
+				local goto = game.Workspace[string.sub(msg,7,#msg)]
+				local head = game.Players.LocalPlayer.Character.HumanoidRootPart
 				local human = game.Players.LocalPlayer.Character.Humanoid
-				local goalPosition = goto["Left Leg"]["Position"]
+				local goalPosition = goto.HumanoidRootPart.Position
 
 				local path = game:GetService("PathfindingService"):CreatePath()
 				path:ComputeAsync(head.Position, goalPosition)
@@ -83,15 +78,15 @@ local function Chatted(msg,plr)
 			end
 		elseif string.lower(string.sub(msg,2,5)) == "stop" then
 			if plr.Name == game.Players.LocalPlayer.Name then
-				on = false
 				Chat("Bot has been turned off.")
+				on = false
 			end
 		end
 	end
 end
 
 local function Tips()
-	while true do
+	while on == true do
 		wait(math.random(45,75))
 		local tip = math.random(1,4)
 		if tip == 1 then
@@ -109,7 +104,7 @@ end
 wait(1)
 Chat("Welcome to "..BotVersion.."! Type "..Prefix.."help for a list of commands.")
 spawn(Tips)
-while true do
+while on == true do
 	for i, player in pairs(game.Players:GetChildren()) do
 		if not table.find(Blacklist,player.Name) and not table.find(Players,player.Name) then
 			table.insert(Players,player.Name)
