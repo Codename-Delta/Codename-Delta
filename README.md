@@ -12,6 +12,6 @@
 
 ## How to help with development
 
-#### If you want to help with the development of the bot, report issues on GitHub so we can fix them quicker.
+#### If you want to help with the development of the bot, <a href="https://github.com/jwklong/Codename-Delta/issues">report issues</a> on GitHub so we can fix them quicker.
 
-#### If you want to add commands to the bot, do a pull request and we will view your changes.
+#### If you want to add commands to the bot, do a <a href="https://github.com/jwklong/Codename-Delta/pulls">pull request</a> and we will view your changes.
