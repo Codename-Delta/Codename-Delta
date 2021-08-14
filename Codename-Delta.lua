@@ -1,5 +1,5 @@
 local Prefix = ":"
-local BotVersion = "Codename Delta - v0.1.4c"
+local BotVersion = "Codename Delta - v0.2.0-dev1"
 local Blacklist = {}
 local Players = {}
 function Chat(msg)
