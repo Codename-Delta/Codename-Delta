@@ -1,7 +1,13 @@
+-- set to false if you dont want tips
+-- put this first and then script / loadstring
+getgenv().tips = true
+
 local Prefix = ":"
 local BotVersion = "Codename Delta - v0.2.0-dev1"
 local Blacklist = {}
 local Players = {}
+local LPlr = game:GetService("Players").LocalPlayer
+
 function Chat(msg)
 	game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(msg,"All")
 end
@@ -16,10 +22,10 @@ local function Chatted(msg,plr)
 		elseif string.lower(string.sub(msg,2,6)) == "about" then
 			Chat("Codename Delta is a advanced bot that can respond at instantaneous speeds (if ping isn't very high) and do complex pathfinding calculations!")
 		elseif string.lower(string.sub(msg,2,5)) == "jump" then
-			if game.Players.LocalPlayer.Character.Humanoid.JumpPower < 50 then
-				game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
+			if LPlr.Character.Humanoid.JumpPower < 50 then
+				LPlr.Character.Humanoid.JumpPower = 50
 			end
-			game.Players.LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+			LPlr.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
 		elseif string.lower(string.sub(msg,2,7)) == "prefix" then
 			if string.len(string.lower(string.sub(msg,9,#msg))) > 1 or string.lower(string.sub(msg,9,9)) == "!" then
 				Chat("ERROR: Invalid Prefix.")
@@ -32,15 +38,15 @@ local function Chatted(msg,plr)
 		elseif string.lower(string.sub(msg,2,4)) == "say" then
 			Chat(string.sub(msg,6,#msg).." - Said by "..plr.Name)
 		elseif string.lower(string.sub(msg,2,5)) == "trip" then
-			game.Players.LocalPlayer.Character.Humanoid.Sit = true
+			LPlr.Character.Humanoid.Sit = true
 		elseif string.lower(string.sub(msg,2,5)) == "goto" then
 			if game.Players:FindFirstChild(string.sub(msg,7,#msg)) then
-				if game.Players.LocalPlayer.Character.Humanoid.JumpPower < 50 then
-					game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
+				if LPlr.Character.Humanoid.JumpPower < 50 then
+					LPlr.Character.Humanoid.JumpPower = 50
 				end
 				local goto = game.Workspace[string.sub(msg,7,#msg)]
-				local head = game.Players.LocalPlayer.Character.HumanoidRootPart
-				local human = game.Players.LocalPlayer.Character.Humanoid
+				local head = LPlr.Character.HumanoidRootPart
+				local human = LPlr.Character.Humanoid
 				local goalPosition = goto.HumanoidRootPart.Position
 
 				local path = game:GetService("PathfindingService"):CreatePath()
@@ -50,11 +56,11 @@ local function Chatted(msg,plr)
 				if path.Status == Enum.PathStatus.Success then
 					local pathfinished = false
 					local function Jump()
-						if game.Players.LocalPlayer.Character.Humanoid.FloorMaterial ~= "" and pathfinished == false and game.Players.LocalPlayer.Character.Humanoid:GetState() ~= Enum.HumanoidStateType.Jumping then
-							game.Players.LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping) 
+						if LPlr.Character.Humanoid.FloorMaterial ~= "" and pathfinished == false and LPlr.Character.Humanoid:GetState() ~= Enum.HumanoidStateType.Jumping then
+							LPlr.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping) 
 						end
 					end
-					_jump = game.Players.LocalPlayer.Character.HumanoidRootPart.Touched:Connect(Jump)
+					_jump = LPlr.Character.HumanoidRootPart.Touched:Connect(Jump)
 					for _, waypoint in pairs(waypoints) do
 						human:MoveTo(waypoint.Position)
 						human.MoveToFinished:Wait()
@@ -66,7 +72,7 @@ local function Chatted(msg,plr)
 					Chat("ERROR: Cannot calculate path.")
 				end
 				local off = false
-				local exit = game.Players.LocalPlayer.Character.Humanoid.StateChanged:Connect(function(a,b)
+				local exit = LPlr.Character.Humanoid.StateChanged:Connect(function(a,b)
 					if a == Enum.HumanoidStateType.Running and b == Enum.HumanoidStateType.None then
 						_jump:Disconnect()
 						off = true
@@ -77,16 +83,22 @@ local function Chatted(msg,plr)
 				Chat("ERROR: Player not found.")
 			end
 		elseif string.lower(string.sub(msg,2,5)) == "stop" then
-			if plr.Name == game.Players.LocalPlayer.Name then
+			if plr.Name == LPlr.Name then
 				Chat("Bot has been turned off.")
 				on = false
 			end
 		end
-	end
+		-- cant test my code cause synapse is patched rn
+		-- i dont think this will work in big games due to the anticheats
+		elseif string.lower(string.sub(msg, 2, 9)) == "bringbot" then
+			if plr.Name ~= LPlr.Name then
+				LPlr.Character.HumanoidRootPart.CFrame = plr.Character.HumanoidRootPart.CFrame
+			end
+		end
 end
 
 local function Tips()
-	while on == true do
+	while on == true and getgenv().tips do
 		wait(math.random(45,75))
 		local tip = math.random(1,4)
 		if tip == 1 then
@@ -105,7 +117,7 @@ wait(1)
 Chat("Welcome to "..BotVersion.."! Type "..Prefix.."help for a list of commands.")
 spawn(Tips)
 while on == true do
-	for i, player in pairs(game.Players:GetChildren()) do
+	for _, player in pairs(game.Players:GetChildren()) do
 		if not table.find(Blacklist,player.Name) and not table.find(Players,player.Name) then
 			table.insert(Players,player.Name)
 			player.Chatted:Connect(function(msg)
