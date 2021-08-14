@@ -3,7 +3,7 @@
 getgenv().tips = true
 
 local Prefix = ":"
-local BotVersion = "Codename Delta - v0.2.0-dev1"
+local BotVersion = "Codename Delta - v0.2.0-dev2"
 local Blacklist = {}
 local Players = {}
 local LPlr = game:GetService("Players").LocalPlayer

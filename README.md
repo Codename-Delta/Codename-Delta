@@ -1,8 +1,8 @@
 # Codename Delta
 
-<img src="Icon.png" alt="a icon" width=300 height=300>
+<img src="Icon.png" alt="a icon" width=400 height=400>
 
-### Latest version: v0.2.0-dev1
+### Latest version: v0.2.0-dev2
 
 ## How to use
 
