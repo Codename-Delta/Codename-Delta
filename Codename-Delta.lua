@@ -1,5 +1,5 @@
 local Prefix = ":"
-local BotVersion = "Codename Delta - v0.1.4a"
+local BotVersion = "Codename Delta - v0.1.4b"
 local Blacklist = {}
 local Players = {}
 function Chat(msg)
@@ -55,7 +55,7 @@ local function Chatted(msg,plr)
 				if path.Status == Enum.PathStatus.Success then
 					local pathfinished = false
 					local function Jump()
-						if game.Players.LocalPlayer.Character.Humanoid.FloorMaterial ~= "" and pathfinished == false then
+						if game.Players.LocalPlayer.Character.Humanoid.FloorMaterial ~= "" and pathfinished == false and game.Players.LocalPlayer.Character.Humanoid:GetState() ~= Enum.HumanoidStateType.Jumping then
 							game.Players.LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping) 
 						end
 					end
@@ -93,13 +93,15 @@ end
 local function Tips()
 	while true do
 		wait(math.random(45,75))
-		local tip = math.random(1,3)
+		local tip = math.random(1,4)
 		if tip == 1 then
 			Chat("TIP: Use "..Prefix.."help to view the list of commands.")
 		elseif tip == 2 then
 			Chat("TIP: Use "..Prefix.."goto (plr) to see the advanced pathfinding this bot has!")
 		elseif tip == 3 then
-			Chat("TIP: The "..Prefix.."trip command can stop the bot from flying.")
+			Chat("TIP: The "..Prefix.."jump command can sometimes make the bot double jump if inputted correctly!")
+		elseif tip == 4 then
+			Chat("TIP: The "..Prefix.."say command can do lots of spaces at once, try doing '"..Prefix.."say te     st'")
 		end
 	end
 end

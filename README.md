@@ -1,6 +1,6 @@
 # Codename Delta
 
-### Latest version: v0.1.4a
+### Latest version: v0.1.4b
 
 ## How to use
 
