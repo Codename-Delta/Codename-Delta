@@ -85,13 +85,12 @@ local function Chatted(msg,plr)
 		elseif string.lower(string.sub(msg,2,5)) == "stop" then
 			if plr.Name == LPlr.Name then
 				Chat("Bot has been turned off.")
+				getgenv().tips = false
 				on = false
 			end
 		end
-		-- cant test my code cause synapse is patched rn
-		-- i dont think this will work in big games due to the anticheats
 		elseif string.lower(string.sub(msg, 2, 9)) == "bringbot" then
-			if plr.Name ~= LPlr.Name then
+			if plr.Name ~= LPlr.Name and on == true then
 				LPlr.Character.HumanoidRootPart.CFrame = plr.Character.HumanoidRootPart.CFrame
 			end
 		end
@@ -116,12 +115,14 @@ end
 wait(1)
 Chat("Welcome to "..BotVersion.."! Type "..Prefix.."help for a list of commands.")
 spawn(Tips)
-while on == true do
+while true do
 	for _, player in pairs(game.Players:GetChildren()) do
 		if not table.find(Blacklist,player.Name) and not table.find(Players,player.Name) then
 			table.insert(Players,player.Name)
 			player.Chatted:Connect(function(msg)
-				Chatted(msg,player)
+				if on == true then
+					Chatted(msg,player)
+				end
 			end)
 		end
 	end
