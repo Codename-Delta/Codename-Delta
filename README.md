@@ -1,5 +1,7 @@
 # Codename Delta
 
+<img src="Icon.png" alt="a icon">
+
 ### Latest version: v0.2.0-dev1
 
 ## How to use
