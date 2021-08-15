@@ -16,9 +16,11 @@ local on = true
 local function Chatted(msg,plr)
 	if string.sub(msg,1,1) == Prefix and on == true and not table.find(Blacklist,plr.Name) then
 		if string.lower(string.sub(msg,2,5)) == "help" then
-			Chat("Prefix: "..Prefix.." Commands: help, about, version, jump, trip, prefix (new), say (text), goto (plr)")
+			Chat("Prefix: "..Prefix.." Commands: help, about, source, version, jump, trip, prefix (new), say (text), goto (plr)")
 		elseif string.lower(string.sub(msg,2,8)) == "version" then
 			Chat("Version: "..BotVersion)
+		elseif string.lower(string.sub(msg,2,7)) == "source" then
+			Chat("The source is available on GitHub, just search Codename-Delta on it to find the bot!)
 		elseif string.lower(string.sub(msg,2,6)) == "about" then
 			Chat("Codename Delta is a advanced bot that can respond at instantaneous speeds (if ping isn't very high) and do complex pathfinding calculations!")
 		elseif string.lower(string.sub(msg,2,5)) == "jump" then
