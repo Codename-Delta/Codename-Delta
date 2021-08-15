@@ -87,12 +87,11 @@ local function Chatted(msg,plr)
 		elseif string.lower(string.sub(msg,2,5)) == "stop" then
 			if plr.Name == LPlr.Name then
 				Chat("Bot has been turned off.")
-				getgenv().tips = false
 				on = false
 			end
 		end
 		elseif string.lower(string.sub(msg, 2, 9)) == "bringbot" then
-			if plr.Name ~= LPlr.Name and on == true then
+			if plr.Name ~= LPlr.Name then
 				LPlr.Character.HumanoidRootPart.CFrame = plr.Character.HumanoidRootPart.CFrame
 			end
 		end
@@ -115,6 +114,7 @@ local function Tips()
 end
 
 wait(1)
+LPlr.Character.Humanoid.Health = 0
 Chat("Welcome to "..BotVersion.."! Type "..Prefix.."help for a list of commands.")
 spawn(Tips)
 while true do
