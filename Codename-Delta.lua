@@ -99,16 +99,20 @@ end
 
 local function Tips()
 	while on == true and getgenv().tips do
-		wait(math.random(45,75))
-		local tip = math.random(1,4)
-		if tip == 1 then
-			Chat("TIP: Use "..Prefix.."help to view the list of commands.")
-		elseif tip == 2 then
-			Chat("TIP: Use "..Prefix.."goto (plr) to see the advanced pathfinding this bot has!")
-		elseif tip == 3 then
-			Chat("TIP: The "..Prefix.."jump command can sometimes make the bot double jump if inputted correctly!")
-		elseif tip == 4 then
-			Chat("TIP: The "..Prefix.."say command can do lots of spaces at once, try doing '"..Prefix.."say te     st'")
+		wait(math.random(55,115))
+		local tip = math.random(1,5)
+		if on == true then
+			if tip == 1 then
+				Chat("TIP: Use "..Prefix.."help to view the list of commands.")
+			elseif tip == 2 then
+				Chat("TIP: Use "..Prefix.."goto (plr) to see the advanced pathfinding this bot has!")
+			elseif tip == 3 then
+				Chat("TIP: The "..Prefix.."jump command can sometimes make the bot double jump if inputted correctly!")
+			elseif tip == 4 then
+				Chat("TIP: The "..Prefix.."say command can do lots of spaces at once, try doing '"..Prefix.."say te     st'")
+			elseif tip == 5 then
+				Chat("TIP: Codename-Delta will get updated lots on GitHub, do "..Prefix.."source for more info!")
+			end
 		end
 	end
 end
