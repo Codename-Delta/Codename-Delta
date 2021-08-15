@@ -29,7 +29,7 @@ local function Chatted(msg,plr)
 			end
 			LPlr.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
 		elseif string.lower(string.sub(msg,2,7)) == "prefix" then
-			if string.len(string.lower(string.sub(msg,9,#msg))) > 1 or string.lower(string.sub(msg,9,9)) == "!" then
+			if string.len(string.lower(string.sub(msg,9,#msg))) > 1 then
 				Chat("ERROR: Invalid Prefix.")
 			elseif string.lower(string.sub(msg,9,9)) == "" then
 				Chat("Current Prefix: "..Prefix)
@@ -126,6 +126,11 @@ while true do
 					Chatted(msg,player)
 				end
 			end)
+		end
+	end
+	for i,player in pairs(Players) do
+		if not table.find(game.Players:GetChildren(),player) then
+			table.remove(Players,player)
 		end
 	end
 	wait(1)
