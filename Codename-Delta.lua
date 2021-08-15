@@ -20,7 +20,7 @@ local function Chatted(msg,plr)
 		elseif string.lower(string.sub(msg,2,8)) == "version" then
 			Chat("Version: "..BotVersion)
 		elseif string.lower(string.sub(msg,2,7)) == "source" then
-			Chat("The source is available on GitHub, just search Codename-Delta on it to find the bot!)
+			Chat("The source is available on GitHub, just search Codename-Delta on it to find the bot!")
 		elseif string.lower(string.sub(msg,2,6)) == "about" then
 			Chat("Codename Delta is a advanced bot that can respond at instantaneous speeds (if ping isn't very high) and do complex pathfinding calculations!")
 		elseif string.lower(string.sub(msg,2,5)) == "jump" then
