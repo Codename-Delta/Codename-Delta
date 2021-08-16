@@ -16,7 +16,13 @@ local on = true
 local function Chatted(msg,plr)
 	if string.sub(msg,1,1) == Prefix and on == true and not table.find(Blacklist,plr.Name) then
 		if string.lower(string.sub(msg,2,5)) == "help" then
-			Chat("Prefix: "..Prefix.." Commands: help, about, source, version, jump, trip, prefix (new), say (text), goto (plr)")
+			-- to add more pages add extra elseifs
+			-- string.sub(msg, 7, #msg) == "page number here" should work
+			if string.sub(msg, 7, #msg) == "1"  or string.sub(msg, 6, #msg) == "" then
+				Chat("Prefix: "..Prefix.." Commands: help, about, source, version, jump, trip, prefix (new), say (text), goto (plr)")
+			else
+				Chat("ERROR: Page not found.")
+			end
 		elseif string.lower(string.sub(msg,2,8)) == "version" then
 			Chat("Version: "..BotVersion)
 		elseif string.lower(string.sub(msg,2,7)) == "source" then
