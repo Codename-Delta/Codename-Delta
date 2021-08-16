@@ -19,7 +19,9 @@ local function Chatted(msg,plr)
 			-- to add more pages add extra elseifs
 			-- string.sub(msg, 7, #msg) == "page number here" should work
 			if string.sub(msg, 7, #msg) == "1"  or string.sub(msg, 6, #msg) == "" then
-				Chat("Prefix: "..Prefix.." Commands: help, about, source, version, jump, trip, prefix (new), say (text), goto (plr)")
+				Chat("Prefix: "..Prefix.."  Page: 1  Commands: help (page), about, source, version, pages, jump, trip, prefix (new), say (text), goto (plr)")
+			elseif string.sub(msg, 7, #msg) == "bot-only" then
+				Chat("Prefix: "..Prefix.."  Page: bot-only  Commands: stop")
 			else
 				Chat("ERROR: Page not found.")
 			end
@@ -27,6 +29,8 @@ local function Chatted(msg,plr)
 			Chat("Version: "..BotVersion)
 		elseif string.lower(string.sub(msg,2,7)) == "source" then
 			Chat("The source is available on GitHub, just search Codename-Delta on it to find the bot!")
+		elseif string.lower(string.sub(msg,2,7)) == "pages" then
+			Chat("Pages: 1. Special Pages: bot-only")
 		elseif string.lower(string.sub(msg,2,6)) == "about" then
 			Chat("Codename Delta is a advanced bot that can respond at instantaneous speeds (if ping isn't very high) and do complex pathfinding calculations!")
 		elseif string.lower(string.sub(msg,2,5)) == "jump" then
