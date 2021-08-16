@@ -3,7 +3,7 @@
 getgenv().tips = true
 
 local Prefix = ":"
-local BotVersion = "Codename Delta - v0.2.0-dev3"
+local BotVersion = "Codename Delta - v0.2.0-dev4"
 local Blacklist = {}
 local Players = {}
 local LPlr = game:GetService("Players").LocalPlayer
@@ -13,6 +13,26 @@ function Chat(msg)
 end
 local on = true
 
+local function GetTip(tip)
+	if tip == 1 then
+		Chat("TIP: Use "..Prefix.."help to view the list of commands.")
+	elseif tip == 2 then
+		Chat("TIP: Use "..Prefix.."goto (plr) to see the advanced pathfinding this bot has!")
+	elseif tip == 3 then
+		Chat("TIP: The "..Prefix.."jump command can sometimes make the bot double jump if inputted correctly!")
+	elseif tip == 4 then
+		Chat("TIP: The "..Prefix.."say command can do lots of spaces at once, try doing '"..Prefix.."say te     st'")
+	elseif tip == 5 then
+		Chat("TIP: Codename-Delta will get updated lots on GitHub, do "..Prefix.."source for more info!")
+	elseif tip == 6 then
+		Chat("TIP: "..Prefix.."pages will show how many pages are in help, and you can use them by doing "..Prefix.."help (page)")
+	elseif tip == 7 then
+		Chat("TIP: When bot has been tripped using "..Prefix.."trip, you can do "..Prefix.."jump to get it back up.")
+	else
+		Chat("ERROR: Tip does not exist.")
+	end
+end
+
 local function Chatted(msg,plr)
 	if string.sub(msg,1,1) == Prefix and on == true and not table.find(Blacklist,plr.Name) then
 		if string.lower(string.sub(msg,2,5)) == "help" then
@@ -21,7 +41,9 @@ local function Chatted(msg,plr)
 			if string.sub(msg, 7, #msg) == "1"  or string.sub(msg, 6, #msg) == "" then
 				Chat("Prefix: "..Prefix.."  Page: 1  Commands: help (page), about, source, version, pages, jump, trip, prefix (new), say (text), goto (plr)")
 			elseif string.sub(msg, 7, #msg) == "bot-only" then
-				Chat("Prefix: "..Prefix.."  Page: bot-only  Commands: stop, blacklist (plr)")
+				Chat("Prefix: "..Prefix.."  Page: bot-only  Commands: stop, blacklist (plr), unblacklist (plr)")
+			elseif string.sub(msg, 7, #msg) == "testing" then
+				Chat("Prefix: "..Prefix.."  Page: testing  Commands: tip (num), bringbot")
 			else
 				Chat("ERROR: Page not found.")
 			end
@@ -30,7 +52,7 @@ local function Chatted(msg,plr)
 		elseif string.lower(string.sub(msg,2,7)) == "source" then
 			Chat("The source is available on GitHub, just search Codename-Delta on it to find the bot!")
 		elseif string.lower(string.sub(msg,2,7)) == "pages" then
-			Chat("Pages: 1. Special Pages: bot-only")
+			Chat("Pages: 1. Special Pages: bot-only, testing")
 		elseif string.lower(string.sub(msg,2,6)) == "about" then
 			Chat("Codename Delta is a advanced bot that can respond at instantaneous speeds (if ping isn't very high) and do complex pathfinding calculations!")
 		elseif string.lower(string.sub(msg,2,5)) == "jump" then
@@ -109,6 +131,19 @@ local function Chatted(msg,plr)
 					Chat("Player does not exist")
 				end
 			end
+		elseif string.lower(string.sub(msg,2,12)) == "unblacklist" then
+			if plr.Name == LPlr.Name then
+				local blacklisting = string.split(msg," ")[2]
+				if table.find(Blacklist,blacklisting) then
+					table.remove(Blacklist,blacklisting)
+					Chat(blacklisting.." is no longer blacklisted.")
+				else
+					Chat("Player is not blacklisted")
+				end
+			end
+		elseif string.lower(string.sub(msg,2,4)) == "tip" then
+			local tip = string.split(msg," ")[2]
+			GetTip(tip)
 		elseif string.lower(string.sub(msg,2,9)) == "bringbot" then
 			if plr.Name ~= LPlr.Name then
 				LPlr.Character.HumanoidRootPart.CFrame = plr.Character.HumanoidRootPart.CFrame
@@ -122,21 +157,7 @@ local function Tips()
 		wait(math.random(55,115))
 		local tip = math.random(1,7)
 		if on == true then
-			if tip == 1 then
-				Chat("TIP: Use "..Prefix.."help to view the list of commands.")
-			elseif tip == 2 then
-				Chat("TIP: Use "..Prefix.."goto (plr) to see the advanced pathfinding this bot has!")
-			elseif tip == 3 then
-				Chat("TIP: The "..Prefix.."jump command can sometimes make the bot double jump if inputted correctly!")
-			elseif tip == 4 then
-				Chat("TIP: The "..Prefix.."say command can do lots of spaces at once, try doing '"..Prefix.."say te     st'")
-			elseif tip == 5 then
-				Chat("TIP: Codename-Delta will get updated lots on GitHub, do "..Prefix.."source for more info!")
-			elseif tip == 6 then
-				Chat("TIP: "..Prefix.."pages will show how many pages are in help, and you can use them by doing "..Prefix.."help (page)")
-			elseif tip == 7 then
-				Chat("TIP: When bot has been tripped using "..Prefix.."trip, you can do "..Prefix.."jump to get it back up.")
-			end
+			GetTip(tip)
 		end
 	end
 end
@@ -156,10 +177,10 @@ while true do
 			end)
 		end
 	end
-	for i,player in pairs(Players) do
+	for _, player in pairs(Players) do
 		if not table.find(game.Players:GetChildren(),player) then
 			table.remove(Players,player)
 		end
 	end
-	wait(1)
+	wait(0.1)
 end
