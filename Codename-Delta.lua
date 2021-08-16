@@ -120,7 +120,7 @@ end
 local function Tips()
 	while on == true and getgenv().tips do
 		wait(math.random(55,115))
-		local tip = math.random(1,5)
+		local tip = math.random(1,7)
 		if on == true then
 			if tip == 1 then
 				Chat("TIP: Use "..Prefix.."help to view the list of commands.")
@@ -132,6 +132,10 @@ local function Tips()
 				Chat("TIP: The "..Prefix.."say command can do lots of spaces at once, try doing '"..Prefix.."say te     st'")
 			elseif tip == 5 then
 				Chat("TIP: Codename-Delta will get updated lots on GitHub, do "..Prefix.."source for more info!")
+			elseif tip == 6 then
+				Chat("TIP: "..Prefix.."pages will show how many pages are in help, and you can use them by doing "..Prefix.."help (page)")
+			elseif tip == 7 then
+				Chat("TIP: When bot has been tripped using "..Prefix.."trip, you can do "..Prefix.."jump to get it back up.")
 			end
 		end
 	end
