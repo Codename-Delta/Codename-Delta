@@ -142,8 +142,7 @@ local function Chatted(msg,plr)
 				end
 			end
 		elseif string.lower(string.sub(msg,2,4)) == "tip" then
-			local tip = string.split(msg," ")[2]
-			GetTip(tip)
+			GetTip(tonumber(string.sub(msg,6,#msg)))
 		elseif string.lower(string.sub(msg,2,9)) == "bringbot" then
 			if plr.Name ~= LPlr.Name then
 				LPlr.Character.HumanoidRootPart.CFrame = plr.Character.HumanoidRootPart.CFrame
