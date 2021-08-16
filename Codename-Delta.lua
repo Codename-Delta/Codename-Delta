@@ -21,7 +21,7 @@ local function Chatted(msg,plr)
 			if string.sub(msg, 7, #msg) == "1"  or string.sub(msg, 6, #msg) == "" then
 				Chat("Prefix: "..Prefix.."  Page: 1  Commands: help (page), about, source, version, pages, jump, trip, prefix (new), say (text), goto (plr)")
 			elseif string.sub(msg, 7, #msg) == "bot-only" then
-				Chat("Prefix: "..Prefix.."  Page: bot-only  Commands: stop")
+				Chat("Prefix: "..Prefix.."  Page: bot-only  Commands: stop, blacklist (plr)")
 			else
 				Chat("ERROR: Page not found.")
 			end
@@ -99,7 +99,17 @@ local function Chatted(msg,plr)
 				Chat("Bot has been turned off.")
 				on = false
 			end
-		elseif string.lower(string.sub(msg, 2, 9)) == "bringbot" then
+		elseif string.lower(string.sub(msg,2,10)) == "blacklist" then
+			if plr.Name == LPlr.Name then
+				local blacklisting = string.split(msg," ")[2]
+				if game.Players:FindFirstChild(blacklisting) then
+					table.insert(Blacklist,blacklisting)
+					Chat(blacklisting.." is now blacklisted.")
+				else
+					Chat("Player does not exist")
+				end
+			end
+		elseif string.lower(string.sub(msg,2,9)) == "bringbot" then
 			if plr.Name ~= LPlr.Name then
 				LPlr.Character.HumanoidRootPart.CFrame = plr.Character.HumanoidRootPart.CFrame
 			end
