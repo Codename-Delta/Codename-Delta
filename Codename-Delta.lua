@@ -174,11 +174,11 @@ while true do
 					Chatted(msg,player)
 				end
 			end)
-		end
-	end
-	for _, player in pairs(Players) do
-		if not table.find(game.Players:GetChildren(),player) then
-			table.remove(Players,table.find(Players,player))
+            game.Players.ChildRemoved:Connect(function(plr)
+                if plr.Name == player.Name then
+                    table.remove(Players,table.find(Players,plr.Name))
+                end
+            end)
 		end
 	end
 	wait(0.1)
