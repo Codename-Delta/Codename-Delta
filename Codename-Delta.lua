@@ -3,7 +3,7 @@
 getgenv().tips = true
 
 local Prefix = ":"
-local BotVersion = "Codename Delta - v0.2.0-dev4"
+local BotVersion = "Codename Delta - v0.2.0a"
 local Blacklist = {}
 local Players = {}
 local LPlr = game:GetService("Players").LocalPlayer
@@ -17,9 +17,9 @@ local function GetTip(tip)
 	if tip == 1 then
 		Chat("TIP: Use "..Prefix.."help to view the list of commands.")
 	elseif tip == 2 then
-		Chat("TIP: Use "..Prefix.."goto (plr) to see the advanced pathfinding this bot has!")
+		Chat("TIP: Use "..Prefix.."goto (plr) to use the advanced pathfinding this bot includes!")
 	elseif tip == 3 then
-		Chat("TIP: The "..Prefix.."jump command can sometimes make the bot double jump if inputted correctly!")
+		Chat("TIP: The "..Prefix.."jump command can sometimes make the bot double jump if said when jumping!")
 	elseif tip == 4 then
 		Chat("TIP: The "..Prefix.."say command can do lots of spaces at once, try doing '"..Prefix.."say te     st'")
 	elseif tip == 5 then
@@ -27,7 +27,9 @@ local function GetTip(tip)
 	elseif tip == 6 then
 		Chat("TIP: "..Prefix.."pages will show how many pages are in help, and you can use them by doing "..Prefix.."help (page)")
 	elseif tip == 7 then
-		Chat("TIP: When bot has been tripped using "..Prefix.."trip, you can do "..Prefix.."jump to get it back up.")
+		Chat("TIP: When bot has been tripped using "..Prefix.."trip, you can do "..Prefix.."jump to untrip it.")
+	elseif tip == 8 then
+		Chat("TIP: When you use "..Prefix.."prefix, it changes the start of the command!")
 	else
 		Chat("ERROR: Tip does not exist.")
 	end
@@ -50,7 +52,7 @@ local function Chatted(msg,plr)
 		elseif string.lower(string.sub(msg,2,8)) == "version" then
 			Chat("Version: "..BotVersion)
 		elseif string.lower(string.sub(msg,2,7)) == "source" then
-			Chat("The source is available on GitHub, just search Codename-Delta on it to find the bot!")
+			Chat("The source is available on GitHub, just search Codename-Delta on it and click on the lua repository!")
 		elseif string.lower(string.sub(msg,2,7)) == "pages" then
 			Chat("Pages: 1. Special Pages: bot-only, testing")
 		elseif string.lower(string.sub(msg,2,6)) == "about" then
@@ -144,9 +146,7 @@ local function Chatted(msg,plr)
 		elseif string.lower(string.sub(msg,2,4)) == "tip" then
 			GetTip(tonumber(string.sub(msg,6,#msg)))
 		elseif string.lower(string.sub(msg,2,9)) == "bringbot" then
-			if plr.Name ~= LPlr.Name then
-				LPlr.Character.HumanoidRootPart.CFrame = plr.Character.HumanoidRootPart.CFrame
-			end
+			LPlr.Character.HumanoidRootPart.CFrame = plr.Character.HumanoidRootPart.CFrame
 		end	
 	end	
 end
@@ -178,7 +178,7 @@ while true do
 	end
 	for _, player in pairs(Players) do
 		if not table.find(game.Players:GetChildren(),player) then
-			table.remove(Players,player)
+			table.remove(Players,table.find(Players,player))
 		end
 	end
 	wait(0.1)
