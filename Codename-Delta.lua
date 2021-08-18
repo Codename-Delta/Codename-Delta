@@ -3,7 +3,7 @@
 getgenv().tips = true
 
 local Prefix = ":"
-local BotVersion = "Codename Delta - v0.2.0a"
+local BotVersion = "Codename Delta - v0.2.0b"
 local Blacklist = {}
 local Players = {}
 local LPlr = game:GetService("Players").LocalPlayer
@@ -42,10 +42,12 @@ local function Chatted(msg,plr)
 			-- string.sub(msg, 7, #msg) == "page number here" should work
 			if string.sub(msg, 7, #msg) == "1"  or string.sub(msg, 6, #msg) == "" then
 				Chat("Prefix: "..Prefix.."  Page: 1  Commands: help (page), about, source, version, pages, jump, trip, prefix (new), say (text), goto (plr)")
+			elseif string.sub(msg, 7, #msg) == "2" then
+				Chat("Prefix: "..Prefix.."  Page: 2  Commands: bringbot")
 			elseif string.sub(msg, 7, #msg) == "bot-only" then
 				Chat("Prefix: "..Prefix.."  Page: bot-only  Commands: stop, blacklist (plr), unblacklist (plr)")
 			elseif string.sub(msg, 7, #msg) == "testing" then
-				Chat("Prefix: "..Prefix.."  Page: testing  Commands: tip (num), bringbot")
+				Chat("Prefix: "..Prefix.."  Page: testing  Commands: tip (num)")
 			else
 				Chat("ERROR: Page not found.")
 			end
@@ -54,7 +56,7 @@ local function Chatted(msg,plr)
 		elseif string.lower(string.sub(msg,2,7)) == "source" then
 			Chat("The source is available on GitHub, just search Codename-Delta on it and click on the lua repository!")
 		elseif string.lower(string.sub(msg,2,7)) == "pages" then
-			Chat("Pages: 1. Special Pages: bot-only, testing")
+			Chat("Pages: 1-2. Special Pages: bot-only, testing. How to use: Do :help (page)")
 		elseif string.lower(string.sub(msg,2,6)) == "about" then
 			Chat("Codename Delta is a advanced bot that can respond at instantaneous speeds (if ping isn't very high) and do complex pathfinding calculations!")
 		elseif string.lower(string.sub(msg,2,5)) == "jump" then
@@ -146,7 +148,7 @@ local function Chatted(msg,plr)
 		elseif string.lower(string.sub(msg,2,4)) == "tip" then
 			GetTip(tonumber(string.sub(msg,6,#msg)))
 		elseif string.lower(string.sub(msg,2,9)) == "bringbot" then
-			LPlr.Character.HumanoidRootPart.CFrame = plr.Character.HumanoidRootPart.CFrame
+			LPlr.Character:SetPrimaryPartCFrame(plr.Character.HumanoidRootPart.CFrame)
 		end	
 	end	
 end

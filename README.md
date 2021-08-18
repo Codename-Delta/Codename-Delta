@@ -2,7 +2,7 @@
 
 <img src="Icon.png" alt="a icon" width=400 height=400>
 
-### Latest version: v0.2.0a
+### Latest version: v0.2.0b
 
 ## How to use
 
