@@ -6,9 +6,11 @@
 
 ## How to use
 
-#### To run this bot, you must have a executor which is something like <a href="https://krnl.ca">krnl</a> or <a href="https://oxygenu.xyz">Oxygen U</a> or just pack it into a local script if your using this in a game not a exploit.
+#### To run this bot, you must have a executor which is something like <a href="https://krnl.ca">krnl</a> or <a href="https://oxygenu.xyz">Oxygen U</a> or just pack it into a local script if your using this in a game not a exploit. (not recommended as it can make all players have bot)
 
 #### Once you have the executor, open the script in it and execute it!
+
+###### (unless you put it in a game, then u can just run the game and it will happen)
 
 ## How to help with development
 

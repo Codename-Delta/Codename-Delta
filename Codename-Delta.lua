@@ -156,7 +156,7 @@ end
 local function Tips()
 	while on == true and getgenv().tips do
 		wait(math.random(55,115))
-		local tip = math.random(1,7)
+		local tip = math.random(1,8)
 		if on == true then
 			GetTip(tip)
 		end
