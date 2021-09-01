@@ -7,10 +7,51 @@ local BotVersion = "Codename Delta - v0.2.0b"
 local Blacklist = {}
 local Players = {}
 local LPlr = game:GetService("Players").LocalPlayer
+local insults = {
+	"Anne Frank had a better living state than you",
+	"You look like a barbie doll which i gave a makeover with my markers",
+	"Your momma back built like a skate ramp I can do an ollie off her",
+	"You look like the 1% of germs that hand-soap doesn't kill",
+	"Boy u literally be smelling like tv oil",
+	"No wonder your parents hate you",
+	"You haven't had any neurological brain development in the last decade",
+	"I will build a sandcastle out of your dead nans ashes",
+	"Your brain has the capacity of a dried sea sponge",
+	"You make me cringe, I literally want to quit this game because of you",
+	"Your outfit is horrendous",
+	"Your name is horrendous",
+	"Your IQ is so low that even scientists cant zoom in on it",
+	"You are a object",
+	"You are fat",
+	"You stink of your nans cremation",
+	"How many people does it take to screw in a lightbulb? 20 of your kind",
+	"I can smell you through the screen",
+	"Candy shop got robbed, didn't know you did it",
+	"Your brain is the size of an average ants",
+	"Everything you've worked for, your whole life is embarassing",
+	"Go back to school",
+	"Are you dumb or just young",
+	"You make me feel e-sick",
+	"I very much dislike you",
+	"Settle along you peasent",
+	"You are worth nothing",
+	"I hope you suffer",
+	"Your words, they make no sense",
+	"Please leave the server you cretin",
+	"You make me sick",
+	"Huh? Didn't know infants could play roblox",
+	"I bet you live in a poverty stricken country",
+	"You belong in the special ed class",
+}
 
+
+function Lchat(msg) --local chat
+	game.StarterGui:SetCore("ChatMakeSystemMessage", {Text = msg;})	
+end
 function Chat(msg)
 	game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(msg,"All")
 end
+local animdisabled = false
 local on = true
 
 local function GetTip(tip)
@@ -55,6 +96,10 @@ local function Chatted(msg,plr)
 			Chat("Version: "..BotVersion)
 		elseif string.lower(string.sub(msg,2,7)) == "source" then
 			Chat("The source is available on GitHub, just search Codename-Delta on it and click on the lua repository!")
+			Chat("For users with exploits the source has been copied to your clipboard.")
+			if setclipboard() then 
+				setclipboard(game:HttpGet("https://raw.githubusercontent.com/jwklong/Codename-Delta/main/Codename-Delta.lua"))
+			end
 		elseif string.lower(string.sub(msg,2,7)) == "pages" then
 			Chat("Pages: 1-2. Special Pages: bot-only, testing. How to use: Do :help (page)")
 		elseif string.lower(string.sub(msg,2,6)) == "about" then
@@ -77,6 +122,16 @@ local function Chatted(msg,plr)
 			Chat(string.sub(msg,6,#msg).." - Said by "..plr.Name)
 		elseif string.lower(string.sub(msg,2,5)) == "trip" then
 			LPlr.Character.Humanoid.Sit = true
+		elseif string.lower(string.sub(msg,2,5)) == "limp" then
+			for i,v in pairs(LPlr.Character:GetChildren()) do
+				if v:IsA("Part") then
+					if v.Name ~= ("Head" or "Torso" or "UpperTorso")
+						v:Destroy();	
+					end
+				end
+			end
+		elseif string.lower(string.sub(msg,2,5)) == "noanim" then
+			pcall(function()LPlr.Character.Animate.Disabled = ~animdisabled end)
 		elseif string.lower(string.sub(msg,2,5)) == "goto" then
 			if game.Players:FindFirstChild(string.sub(msg,7,#msg)) then
 				if LPlr.Character.Humanoid.JumpPower < 50 then
@@ -149,6 +204,9 @@ local function Chatted(msg,plr)
 			GetTip(tonumber(string.sub(msg,6,#msg)))
 		elseif string.lower(string.sub(msg,2,9)) == "bringbot" then
 			LPlr.Character:SetPrimaryPartCFrame(plr.Character.HumanoidRootPart.CFrame)
+		elseif string.lower(string.sub(msg,2,9)) == "roast" then
+			local person = string.split(msg," ")[2]
+			Chat("Dear " .. person .. insults[math.random(1,#insults)])
 		end	
 	end	
 end
