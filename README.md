@@ -16,4 +16,4 @@
 
 #### If you want to add commands to the bot, do a <a href="https://github.com/jwklong/Codename-Delta/pulls">pull request</a> and we will view your changes.
 
-###### <a href="https://github.com/jwklong/Codename-Delta/tree/v0.2.0-dev">development branch</a>
+###### <a href="https://github.com/jwklong/Codename-Delta/tree/v0.2.x-dev">development branch</a>
