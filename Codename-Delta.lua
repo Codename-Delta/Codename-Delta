@@ -8,7 +8,7 @@ local Blacklist = {}
 local Players = {}
 local LPlr = game:GetService("Players").LocalPlayer
 
-function Lchat(msg) --local chat
+function LChat(msg) --local chat
 	game.StarterGui:SetCore("ChatMakeSystemMessage", {Text = msg;})	
 end
 function Chat(msg)
@@ -38,6 +38,15 @@ local function GetTip(tip)
 	else
 		Chat("ERROR: Tip does not exist.")
 	end
+end
+
+function IsBot(plr)
+    if plr.Name == LPlr.Name or plr.Name == "CodenameDelta" then
+        return true
+    else
+        Chat("ERROR: This is a bot only command.")
+        return false
+    end
 end
 
 local function Chatted(msg,plr)
@@ -128,12 +137,12 @@ local function Chatted(msg,plr)
 				Chat("ERROR: Player not found.")
 			end
 		elseif string.lower(string.sub(msg,2,5)) == "stop" then
-			if plr.Name == LPlr.Name then
+			if IsBot(plr) then
 				Chat("Bot has been turned off.")
 				on = false
 			end
 		elseif string.lower(string.sub(msg,2,10)) == "blacklist" then
-			if plr.Name == LPlr.Name then
+			if IsBot(plr) then
 				local blacklisting = string.split(msg," ")[2]
 				if game.Players:FindFirstChild(blacklisting) then
 					table.insert(Blacklist,blacklisting)
@@ -143,7 +152,7 @@ local function Chatted(msg,plr)
 				end
 			end
 		elseif string.lower(string.sub(msg,2,12)) == "unblacklist" then
-			if plr.Name == LPlr.Name then
+			if IsBot(plr) then
 				local blacklisting = string.split(msg," ")[2]
 				if table.find(Blacklist,blacklisting) then
 					table.remove(Blacklist,blacklisting)
@@ -153,11 +162,11 @@ local function Chatted(msg,plr)
 				end
 			end
 		elseif string.lower(string.sub(msg,2,6)) == "reset" then
-			if plr.Name == LPlr.Name then
+			if IsBot(plr) then
 				LPlr.Character.Humanoid.Health = 0
 			end
 		elseif string.lower(string.sub(msg,2,11)) == "invincible" then
-			if plr.Name == LPlr.Name then --NOTE: you cannot be damaged unless you have bad network ownership (credits to Alpha-404 for script)
+			if IsBot(plr) then --NOTE: you cannot be damaged unless you have bad network ownership (credits to Alpha-404 for script)
 				loadsting(game:HttpGet("https://raw.githubusercontent.com/Alpha-404/NC-REANIM-V2/main/V2.5.lua"))() 
 			end
 		elseif string.lower(string.sub(msg,2,4)) == "tip" then
@@ -176,7 +185,9 @@ local function Tips()
 	end
 end
 
-wait(1)
+LChat("Thank you for using Codename Delta, the bot will start shortly.")
+wait(3)
+
 LPlr.Character.Humanoid.Health = 0
 Chat("Welcome to "..BotVersion.."! Type "..Prefix.."help for a list of commands.")
 spawn(Tips)
@@ -187,9 +198,9 @@ while true do
 			player.Chatted:Connect(function(msg)
 				if on == true then Chatted(msg,player) end
 			end)
-            		game.Players.ChildRemoved:Connect(function(plr)
-                		if plr.Name == player.Name then table.remove(Players,table.find(Players,plr.Name)) end
-            		end)
+            game.Players.ChildRemoved:Connect(function(plr)
+            	if plr.Name == player.Name then table.remove(Players,table.find(Players,plr.Name)) end
+            end)
 		end
 	end
 	wait(0.1)
