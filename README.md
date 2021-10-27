@@ -1,6 +1,6 @@
 # Codename Delta
 
-<img src="Icon.png" alt="a icon" style="display: block; margin-left: auto; margin-right: auto; width: 35%">
+<img src="Icon.png" alt="a icon" width=350px height=350px align="center">
 
 ### Latest version: v0.2.1-dev1
 
