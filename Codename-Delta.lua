@@ -9,7 +9,7 @@ local Players = {}
 local LPlr = game:GetService("Players").LocalPlayer
 
 function LChat(msg) --local chat
-	game.StarterGui:SetCore("ChatMakeSystemMessage", {Text = msg;})	
+	game.StarterGui:SetCore("ChatMakeSystemMessage", {Text = "[Codename Delta]: "..msg;Color = Color3.fromRGB(77, 166, 255)})	
 end
 function Chat(msg)
 	game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(msg,"All")
@@ -69,7 +69,7 @@ local function Chatted(msg,plr)
 		elseif string.lower(string.sub(msg,2,7)) == "source" then
 			Chat("The source is available on GitHub, just search Codename-Delta on it and click on the lua repository!")
 		elseif string.lower(string.sub(msg,2,7)) == "pages" then
-			Chat("Pages: 1-2. Special Pages: bot-only, testing. How to use: Do :help (page)")
+			Chat("Pages: 1-2. Special Pages: bot-only, testing. How to use: Do "..Prefix.."help (page)")
 		elseif string.lower(string.sub(msg,2,6)) == "about" then
 			Chat("Codename Delta is a advanced bot that can respond at instantaneous speeds (if ping isn't very high) and do complex pathfinding calculations!")
 		elseif string.lower(string.sub(msg,2,5)) == "jump" then
