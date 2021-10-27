@@ -33,6 +33,8 @@ local function GetTip(tip)
 		Chat("TIP: When bot has been tripped using "..Prefix.."trip, you can do "..Prefix.."jump to untrip it.")
 	elseif tip == 8 then
 		Chat("TIP: When you use "..Prefix.."prefix, it changes the start of the command!")
+	elseif tip == 69420 then --funny easter egg
+		Chat("TIP: stop acting sussy")
 	else
 		Chat("ERROR: Tip does not exist.")
 	end
@@ -41,8 +43,7 @@ end
 local function Chatted(msg,plr)
 	if string.sub(msg,1,1) == Prefix and on == true and not table.find(Blacklist,plr.Name) then
 		if string.lower(string.sub(msg,2,5)) == "help" then
-			-- to add more pages add extra elseifs
-			-- string.sub(msg, 7, #msg) == "page number/name here" should work
+			-- to add more pages add extra 'elseif string.sub(msg, 7, #msg) == "page number/name here"' and it should work
 			if string.sub(msg, 7, #msg) == "1"  or string.sub(msg, 6, #msg) == "" then
 				Chat("Prefix: "..Prefix.."  Page: 1  Commands: help (page), about, source, version, pages, jump, trip, prefix (new), say (text), goto (plr)")
 			elseif string.sub(msg, 7, #msg) == "2" then
@@ -72,12 +73,12 @@ local function Chatted(msg,plr)
 			LPlr.Character.Humanoid.JumpPower = oldjumppower
 		elseif string.lower(string.sub(msg,2,7)) == "prefix" then
 			if string.len(string.lower(string.sub(msg,9,#msg))) > 1 then
-				Chat("ERROR: Invalid Prefix.")
+				Chat("ERROR: Invalid prefix, prefix remains as "..Prefix)
 			elseif string.lower(string.sub(msg,9,9)) == "" then
-				Chat("Current Prefix: "..Prefix)
+				Chat("ERROR: No prefix specified, prefix remains as "..Prefix)
 			else
 				Prefix = string.lower(string.sub(msg,9,9))
-				Chat("Prefix changed to "..Prefix)
+				Chat("Prefix successfully changed to "..Prefix)
 			end
 		elseif string.lower(string.sub(msg,2,4)) == "say" then
 			Chat(string.sub(msg,6,#msg).." - Said by "..plr.Name)
@@ -155,12 +156,8 @@ local function Chatted(msg,plr)
 			if plr.Name == LPlr.Name then
 				LPlr.Character.Humanoid.Health = 0
 			end
-		elseif string.lower(string.sub(msg,2,11)) == "invincible" then --NOTE (old): this is not invincible to things that set health to 0, only ones like weapons. e.g. a sword
-			if plr.Name == LPlr.Name then --NEW NOTE : THIS IS BASICALLY JESUS V2 UNLESS YOU HAVE BAD NETWORK OWNERSHIP U WILL BE FINE
-				--[[ (Client sided and boring af)
-				LPlr.Character.Humanoid.MaxHealth = 2^1023 
-				LPlr.Character.Humanoid.Health = 2^1023
-				]]
+		elseif string.lower(string.sub(msg,2,11)) == "invincible" then
+			if plr.Name == LPlr.Name then --NOTE: you cannot be damaged unless you have bad network ownership (credits to Alpha-404 for script)
 				loadsting(game:HttpGet("https://raw.githubusercontent.com/Alpha-404/NC-REANIM-V2/main/V2.5.lua"))() 
 			end
 		elseif string.lower(string.sub(msg,2,4)) == "tip" then
@@ -175,9 +172,7 @@ local function Tips()
 	while on == true and getgenv().tips do
 		wait(math.random(55,115))
 		local tip = math.random(1,8)
-		if on == true then
-			GetTip(tip)
-		end
+		if on == true then GetTip(tip) end
 	end
 end
 
@@ -190,15 +185,11 @@ while true do
 		if not table.find(Blacklist,player.Name) and not table.find(Players,player.Name) then
 			table.insert(Players,player.Name)
 			player.Chatted:Connect(function(msg)
-				if on == true then
-					Chatted(msg,player)
-				end
+				if on == true then Chatted(msg,player) end
 			end)
-            game.Players.ChildRemoved:Connect(function(plr)
-                if plr.Name == player.Name then
-                    table.remove(Players,table.find(Players,plr.Name))
-                end
-            end)
+            		game.Players.ChildRemoved:Connect(function(plr)
+                		if plr.Name == player.Name then table.remove(Players,table.find(Players,plr.Name)) end
+            		end)
 		end
 	end
 	wait(0.1)
