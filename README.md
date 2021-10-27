@@ -1,6 +1,6 @@
 # Codename Delta
 
-<p align="center"><img src="Icon.png" alt="a icon" width=350px height=350px><br>
+<p align="center"><img src="Icon.png" alt="a icon" width=350px height=350px>
 <h3>Latest version: v0.2.1-dev1</h3></p>
 
 ## How to use
