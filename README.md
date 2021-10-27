@@ -1,8 +1,8 @@
 # Codename Delta
 
-<img src="Icon.png" alt="a icon" width=400 height=400>
+<img src="Icon.png" alt="a icon" width=350 height=350 style="display: block; margin-left: auto; margin-right: auto">
 
-### Latest version: v0.2.0b
+### Latest version: v0.2.1-dev1
 
 ## How to use
 
@@ -18,4 +18,4 @@
 
 #### If you want to add commands to the bot, do a <a href="https://github.com/jwklong/Codename-Delta/pulls">pull request</a> and we will view your changes.
 
-###### <a href="https://github.com/jwklong/Codename-Delta/tree/v0.2.0-dev">development branch</a>
+###### <a href="https://github.com/jwklong/Codename-Delta/tree/v0.2.x-dev">development branch</a>
