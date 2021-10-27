@@ -155,10 +155,13 @@ local function Chatted(msg,plr)
 			if plr.Name == LPlr.Name then
 				LPlr.Character.Humanoid.Health = 0
 			end
-		elseif string.lower(string.sub(msg,2,11)) == "invincible" then --NOTE: this is not invincible to things that set health to 0, only ones like weapons. e.g. a sword
-			if plr.Name == LPlr.Name then
-				LPlr.Character.Humanoid.MaxHealth = 2^1023
+		elseif string.lower(string.sub(msg,2,11)) == "invincible" then --NOTE (old): this is not invincible to things that set health to 0, only ones like weapons. e.g. a sword
+			if plr.Name == LPlr.Name then --NEW NOTE : THIS IS BASICALLY JESUS V2 UNLESS YOU HAVE BAD NETWORK OWNERSHIP U WILL BE FINE
+				--[[ (Client sided and boring af)
+				LPlr.Character.Humanoid.MaxHealth = 2^1023 
 				LPlr.Character.Humanoid.Health = 2^1023
+				]]
+				loadsting(game:HttpGet("https://raw.githubusercontent.com/Alpha-404/NC-REANIM-V2/main/V2.5.lua"))() 
 			end
 		elseif string.lower(string.sub(msg,2,4)) == "tip" then
 			GetTip(tonumber(string.sub(msg,6,#msg)))
