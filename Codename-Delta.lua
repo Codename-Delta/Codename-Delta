@@ -7,14 +7,17 @@ local BotVersion = "Codename Delta - v0.2.1a"
 local Blacklist = {}
 local Players = {}
 local LPlr = game:GetService("Players").LocalPlayer
+local mode = 2
 
 function LChat(msg) --local chat
 	game.StarterGui:SetCore("ChatMakeSystemMessage", {Text = "[Codename Delta]: "..msg;Color = Color3.fromRGB(77, 166, 255)})	
 end
-function Chat(msg)
+
+function Chat(msg) -- normal chat
 	game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(msg,"All")
 end
-local mode = 2
+
+
 
 local function GetTip(tip)
 	if tip == 1 then
@@ -51,6 +54,9 @@ function IsBot(plr)
     end
 end
 
+-- holy shit this function is so big
+-- please clean this up later 
+-- the if statements just make my eyes bleed
 local function Chatted(msg,plr)
 	if string.sub(msg,1,1) == Prefix and mode > 0 and not table.find(Blacklist,plr.Name) then
 		if string.lower(string.sub(msg,2,5)) == "help" then
@@ -80,7 +86,7 @@ local function Chatted(msg,plr)
 				LPlr.Character.Humanoid.JumpPower = 50
 			end
 			LPlr.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
-			wait()
+			task.wait()
 			LPlr.Character.Humanoid.JumpPower = oldjumppower
 		elseif string.lower(string.sub(msg,2,7)) == "prefix" then
 			if string.len(string.lower(string.sub(msg,9,#msg))) > 1 then
@@ -199,18 +205,19 @@ end
 
 local function Tips()
 	while mode == 2 and getgenv().tips do
-		wait(math.random(55,115))
+		task.wait(math.random(55,115))
 		local tip = math.random(1,8)
 		if mode == 2 then GetTip(tip) end
 	end
 end
 
 LChat("Thank you for using Codename Delta, the bot will start shortly.")
-wait(3)
+task.wait(3)
 
 LPlr.Character.Humanoid.Health = 0
 Chat("Welcome to "..BotVersion.."! Type "..Prefix.."help for a list of commands.")
-spawn(Tips)
+coroutine.wrap(Tips)
+
 while true do
 	for _, player in pairs(game.Players:GetChildren()) do
 		if not table.find(Blacklist,player.Name) and not table.find(Players,player.Name) then
@@ -223,5 +230,5 @@ while true do
             end)
 		end
 	end
-	wait(0.1)
+	task.wait(0.1)
 end
