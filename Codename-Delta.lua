@@ -9,10 +9,10 @@ local Players = {}
 local LPlr = game:GetService("Players").LocalPlayer
 
 function LChat(msg) --local chat
-	game.StarterGui:SetCore("ChatMakeSystemMessage", {Text = "[Codename Delta]: "..msg;Color = Color3.fromRGB(77, 166, 255)})	
+	game:GetService("StarterGui"):SetCore("ChatMakeSystemMessage", {Text = "[Codename Delta]: "..msg;Color = Color3.fromRGB(77, 166, 255)})	
 end
 function Chat(msg)
-	game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(msg,"All")
+	game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(msg,"All")
 end
 local mode = 2
 
@@ -173,6 +173,7 @@ local function Chatted(msg,plr)
 		elseif string.lower(string.sub(msg,2,6)) == "reset" then
 			if IsBot(plr) then
 				LPlr.Character.Humanoid.Health = 0
+                pcall(function()LPlr.Character:BreakJoints()end)
 			end
 		elseif string.lower(string.sub(msg,2,11)) == "invincible" then
 			if IsBot(plr) then --NOTE: you cannot be damaged unless you have bad network ownership (credits to Alpha-404 for script)
@@ -219,6 +220,7 @@ LChat("Thank you for using Codename Delta, the bot will start shortly.")
 wait(3)
 
 LPlr.Character.Humanoid.Health = 0
+pcall(function()LPlr.Character:BreakJoints()end)
 Chat("Welcome to "..BotVersion.."! Type "..Prefix.."help for a list of commands.")
 spawn(Tips)
 while true do
