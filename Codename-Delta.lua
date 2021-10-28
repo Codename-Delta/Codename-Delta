@@ -3,7 +3,7 @@
 getgenv().tips = true
 
 local Prefix = ":"
-local BotVersion = "Codename Delta - v0.2.1-lock"
+local BotVersion = "Codename Delta - [CONFIDENTIAL]"
 local Blacklist = {}
 local Players = {}
 local LPlr = game:GetService("Players").LocalPlayer
@@ -52,7 +52,7 @@ function IsBot(plr)
 end
 
 local function Chatted(msg,plr)
-	if string.sub(msg,1,1) == Prefix and ((mode == 2 and mode > 0) or (mode == 1 and plr.Name == LPlr.Name)) and not table.find(Blacklist,plr.Name) then
+	if string.sub(msg,1,1) == Prefix and (mode == 2 or (mode == 1 and plr.Name == LPlr.Name)) and not table.find(Blacklist,plr.Name) then
 		if string.lower(string.sub(msg,2,5)) == "help" then
 			-- to add more pages add extra 'elseif string.sub(msg, 7, #msg) == "page number/name here"' and it should work
 			if string.sub(msg, 7, #msg) == "1"  or string.sub(msg, 6, #msg) == "" then
@@ -145,7 +145,7 @@ local function Chatted(msg,plr)
 			if IsBot(plr) then
 				Chat("Bot has been turned off.")
                 LChat("Hope you enjoyed using this bot!")
-				on = false
+				mode = off
 			end
 		elseif string.lower(string.sub(msg,2,10)) == "blacklist" then
 			if IsBot(plr) then
@@ -228,7 +228,7 @@ while true do
 		if not table.find(Blacklist,player.Name) and not table.find(Players,player.Name) then
 			table.insert(Players,player.Name)
 			player.Chatted:Connect(function(msg)
-				if mode == 2 or (mode == 1 and player.Name == LPlr.Name) then Chatted(msg,player) end
+				if mode > 0 then Chatted(msg,player) end
 			end)
             game.Players.ChildRemoved:Connect(function(plr)
             	if plr.Name == player.Name then table.remove(Players,table.find(Players,plr.Name)) end
