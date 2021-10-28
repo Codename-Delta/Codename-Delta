@@ -145,7 +145,7 @@ local function Chatted(msg,plr)
 			if IsBot(plr) then
 				Chat("Bot has been turned off.")
                 LChat("Hope you enjoyed using this bot!")
-				on = false
+				mode = 0
 			end
 		elseif string.lower(string.sub(msg,2,10)) == "blacklist" then
 			if IsBot(plr) then
