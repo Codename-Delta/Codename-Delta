@@ -3,7 +3,7 @@
 getgenv().tips = true
 
 local Prefix = ":"
-local BotVersion = "Codename Delta - v0.2.1-dev1"
+local BotVersion = "Codename Delta - v0.2.1-dev2"
 local Blacklist = {}
 local Players = {}
 local LPlr = game:GetService("Players").LocalPlayer
@@ -89,6 +89,9 @@ local function Chatted(msg,plr)
 				Prefix = string.lower(string.sub(msg,9,9))
 				Chat("Prefix successfully changed to "..Prefix)
 			end
+            if plr.Name == LPlr.Name then
+                LChat("Trying to change your bot prefix, but it also changes another bot in the server? Do '!!prefix' if so.")
+            end
 		elseif string.lower(string.sub(msg,2,4)) == "say" then
 			Chat(string.sub(msg,6,#msg).." - Said by "..plr.Name)
 		elseif string.lower(string.sub(msg,2,5)) == "trip" then
@@ -139,6 +142,7 @@ local function Chatted(msg,plr)
 		elseif string.lower(string.sub(msg,2,5)) == "stop" then
 			if IsBot(plr) then
 				Chat("Bot has been turned off.")
+                LChat("See you soon!")
 				on = false
 			end
 		elseif string.lower(string.sub(msg,2,10)) == "blacklist" then
@@ -155,9 +159,12 @@ local function Chatted(msg,plr)
 			if IsBot(plr) then
 				local blacklisting = string.split(msg," ")[2]
 				if table.find(Blacklist,blacklisting) then
-					table.remove(Blacklist,blacklisting)
+					table.remove(Blacklist,table.find(Blacklist,blacklisting))
 					Chat(blacklisting.." is no longer blacklisted.")
-				else
+                elseif blacklisting == "all" then
+					table.clear(Blacklist)
+					Chat("Everyone is no longer blacklisted.")
+                else
 					Chat("Player is not blacklisted")
 				end
 			end
@@ -173,7 +180,18 @@ local function Chatted(msg,plr)
 			GetTip(tonumber(string.sub(msg,6,#msg)))
 		elseif string.lower(string.sub(msg,2,9)) == "bringbot" then
 			LPlr.Character:SetPrimaryPartCFrame(plr.Character.HumanoidRootPart.CFrame)
-		end	
+		end
+    elseif string.lower(string.sub(msg,1,8)) == "!!prefix" then
+        if IsBot(plr) then
+            if string.len(string.lower(string.sub(msg,10,#msg))) > 1 then
+				Chat("ERROR: Invalid prefix, prefix remains as "..Prefix)
+			elseif string.lower(string.sub(msg,10,10)) == "" then
+				Chat("ERROR: No prefix specified, prefix remains as "..Prefix)
+			else
+				Prefix = string.lower(string.sub(msg,10,10))
+				Chat("Prefix successfully changed to "..Prefix)
+			end
+        end
 	end	
 end
 
