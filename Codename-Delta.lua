@@ -3,7 +3,7 @@
 getgenv().tips = true
 
 local Prefix = ":"
-local BotVersion = "Codename Delta - v0.2.1-dev2"
+local BotVersion = "Codename Delta - v0.2.x-lock"
 local Blacklist = {}
 local Players = {}
 local LPlr = game:GetService("Players").LocalPlayer
@@ -14,7 +14,7 @@ end
 function Chat(msg)
 	game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(msg,"All")
 end
-local on = true
+local mode = 2
 
 local function GetTip(tip)
 	if tip == 1 then
@@ -33,6 +33,8 @@ local function GetTip(tip)
 		Chat("TIP: When bot has been tripped using "..Prefix.."trip, you can do "..Prefix.."jump to untrip it.")
 	elseif tip == 8 then
 		Chat("TIP: When you use "..Prefix.."prefix, it changes the start of the command!")
+    elseif tip == 9 then
+		Chat("TIP: You can test the bot by doing "..Prefix.."help testing, it may have some commands!")
 	elseif tip == 69420 then --funny easter egg
 		Chat("TIP: stop acting sussy")
 	else
@@ -50,7 +52,7 @@ function IsBot(plr)
 end
 
 local function Chatted(msg,plr)
-	if string.sub(msg,1,1) == Prefix and on == true and not table.find(Blacklist,plr.Name) then
+	if string.sub(msg,1,1) == Prefix and (mode == 2 or (mode > 0 and plr.Name == LPlr.Name)) and not table.find(Blacklist,plr.Name) then
 		if string.lower(string.sub(msg,2,5)) == "help" then
 			-- to add more pages add extra 'elseif string.sub(msg, 7, #msg) == "page number/name here"' and it should work
 			if string.sub(msg, 7, #msg) == "1"  or string.sub(msg, 6, #msg) == "" then
@@ -142,7 +144,7 @@ local function Chatted(msg,plr)
 		elseif string.lower(string.sub(msg,2,5)) == "stop" then
 			if IsBot(plr) then
 				Chat("Bot has been turned off.")
-                LChat("See you soon!")
+                LChat("Hope you enjoyed using this bot!")
 				on = false
 			end
 		elseif string.lower(string.sub(msg,2,10)) == "blacklist" then
@@ -176,6 +178,16 @@ local function Chatted(msg,plr)
 			if IsBot(plr) then --NOTE: you cannot be damaged unless you have bad network ownership (credits to Alpha-404 for script)
 				loadsting(game:HttpGet("https://raw.githubusercontent.com/Alpha-404/NC-REANIM-V2/main/V2.5.lua"))() 
 			end
+        elseif string.lower(string.sub(msg,2,5)) == "lock" then
+            if IsBot(plr) then
+                if mode == 2 then
+                    mode == 1
+                    Chat("Commands are now locked to bot.")
+                elseif mode == 1 then
+                    mode == 2
+                    Chat("Commands have been unlocked.")
+                end
+            end
 		elseif string.lower(string.sub(msg,2,4)) == "tip" then
 			GetTip(tonumber(string.sub(msg,6,#msg)))
 		elseif string.lower(string.sub(msg,2,9)) == "bringbot" then
@@ -196,10 +208,10 @@ local function Chatted(msg,plr)
 end
 
 local function Tips()
-	while on == true and getgenv().tips do
+	while mode > 0 and getgenv().tips do
 		wait(math.random(55,115))
 		local tip = math.random(1,8)
-		if on == true then GetTip(tip) end
+		if mode == 2 then GetTip(tip) end
 	end
 end
 
@@ -214,7 +226,7 @@ while true do
 		if not table.find(Blacklist,player.Name) and not table.find(Players,player.Name) then
 			table.insert(Players,player.Name)
 			player.Chatted:Connect(function(msg)
-				if on == true then Chatted(msg,player) end
+				if mode == 2 then Chatted(msg,player) end
 			end)
             game.Players.ChildRemoved:Connect(function(plr)
             	if plr.Name == player.Name then table.remove(Players,table.find(Players,plr.Name)) end
