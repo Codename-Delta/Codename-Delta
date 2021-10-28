@@ -12,7 +12,7 @@ function LChat(msg) --local chat
 	game.StarterGui:SetCore("ChatMakeSystemMessage", {Text = "[Codename Delta]: "..msg;Color = Color3.fromRGB(77, 166, 255)})	
 end
 function Chat(msg)
-	game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(msg,"All")
+	game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(msg,"All")
 end
 local mode = 2
 
@@ -43,9 +43,12 @@ local function GetTip(tip)
 end
 
 function IsBot(plr)
+	print("checking if bot")
     if plr.Name == LPlr.Name or plr.Name == "CodenameDelta" then
+		print("it is bot")
         return true
     else
+		print("its not bot")
         Chat("ERROR: This is a bot only command.")
         return false
     end
@@ -173,6 +176,7 @@ local function Chatted(msg,plr)
 		elseif string.lower(string.sub(msg,2,6)) == "reset" then
 			if IsBot(plr) then
 				LPlr.Character.Humanoid.Health = 0
+				pcall(function()LPlr.Character:BreakJoints()end)
 			end
 		elseif string.lower(string.sub(msg,2,11)) == "invincible" then
 			if IsBot(plr) then --NOTE: you cannot be damaged unless you have bad network ownership (credits to Alpha-404 for script)
@@ -215,7 +219,7 @@ local function Tips()
 	end
 end
 
-LChat("Thank you for using Codename Delta, the bot will start shortly.")
+LChat("Thank you for using Codename Delta, the bot will start shortly. (hopefully)")
 wait(3)
 
 LPlr.Character.Humanoid.Health = 0
