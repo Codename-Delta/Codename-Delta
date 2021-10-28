@@ -183,11 +183,14 @@ local function Chatted(msg,plr)
 				loadsting(game:HttpGet("https://raw.githubusercontent.com/Alpha-404/NC-REANIM-V2/main/V2.5.lua"))() 
 			end
         elseif string.lower(string.sub(msg,2,5)) == "lock" then
+			print("lock command just about to run")
             if IsBot(plr) then
                 if mode == 2 then
+					print("commands locked mode is now 1")
                     mode == 1
                     Chat("Commands are now locked to bot.")
                 elseif mode == 1 then
+					print("commands locked mode is now 2")
                     mode == 2
                     Chat("Commands have been unlocked.")
                 end
@@ -219,7 +222,7 @@ local function Tips()
 	end
 end
 
-LChat("Thank you for using Codename Delta, the bot will start shortly. (hopefully)")
+LChat("Thank you for using Codename Delta, the bot will start shortly.")
 wait(3)
 
 LPlr.Character.Humanoid.Health = 0
