@@ -187,11 +187,11 @@ local function Chatted(msg,plr)
             if IsBot(plr) then
                 if mode == 2 then
 					print("commands locked mode is now 1")
-                    mode == 1
+                    mode = 1
                     Chat("Commands are now locked to bot.")
                 elseif mode == 1 then
 					print("commands locked mode is now 2")
-                    mode == 2
+                    mode = 2
                     Chat("Commands have been unlocked.")
                 end
             end
