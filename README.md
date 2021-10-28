@@ -1,7 +1,7 @@
 # Codename Delta
 
 <p align="center"><img src="Icon.png" alt="a icon" width=350px height=350px></p>
-<h3 align="center">Latest version: v0.2.1-dev1</h3>
+<h3 align="center">Latest version: v0.2.1-dev2</h3>
 
 ## How to use
 
