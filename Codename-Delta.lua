@@ -12,7 +12,7 @@ function LChat(msg) --local chat
 	game.StarterGui:SetCore("ChatMakeSystemMessage", {Text = "[Codename Delta]: "..msg;Color = Color3.fromRGB(77, 166, 255)})	
 end
 function Chat(msg)
-	game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(msg,"All")
+	game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(msg,"All")
 end
 local mode = 2
 
@@ -43,12 +43,9 @@ local function GetTip(tip)
 end
 
 function IsBot(plr)
-	print("checking if bot")
     if plr.Name == LPlr.Name or plr.Name == "CodenameDelta" then
-		print("it is bot")
         return true
     else
-		print("its not bot")
         Chat("ERROR: This is a bot only command.")
         return false
     end
@@ -176,22 +173,18 @@ local function Chatted(msg,plr)
 		elseif string.lower(string.sub(msg,2,6)) == "reset" then
 			if IsBot(plr) then
 				LPlr.Character.Humanoid.Health = 0
-				pcall(function()LPlr.Character:BreakJoints()end)
 			end
 		elseif string.lower(string.sub(msg,2,11)) == "invincible" then
 			if IsBot(plr) then --NOTE: you cannot be damaged unless you have bad network ownership (credits to Alpha-404 for script)
 				loadsting(game:HttpGet("https://raw.githubusercontent.com/Alpha-404/NC-REANIM-V2/main/V2.5.lua"))() 
 			end
         elseif string.lower(string.sub(msg,2,5)) == "lock" then
-			print("lock command just about to run")
             if IsBot(plr) then
                 if mode == 2 then
-					print("commands locked mode is now 1")
-                    mode = 1
+                    mode == 1
                     Chat("Commands are now locked to bot.")
                 elseif mode == 1 then
-					print("commands locked mode is now 2")
-                    mode = 2
+                    mode == 2
                     Chat("Commands have been unlocked.")
                 end
             end
