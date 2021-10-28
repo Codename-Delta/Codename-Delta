@@ -3,7 +3,7 @@
 getgenv().tips = true
 
 local Prefix = ":"
-local BotVersion = "Codename Delta - v0.2.1-dev2"
+local BotVersion = "Codename Delta - v0.2.1a"
 local Blacklist = {}
 local Players = {}
 local LPlr = game:GetService("Players").LocalPlayer
@@ -33,6 +33,8 @@ local function GetTip(tip)
 		Chat("TIP: When bot has been tripped using "..Prefix.."trip, you can do "..Prefix.."jump to untrip it.")
 	elseif tip == 8 then
 		Chat("TIP: When you use "..Prefix.."prefix, it changes the start of the command!")
+    elseif tip == 9 then
+		Chat("TIP: You can test the bot by doing "..Prefix.."help testing, it may have some commands!")
 	elseif tip == 69420 then --funny easter egg
 		Chat("TIP: stop acting sussy")
 	else
@@ -181,9 +183,9 @@ local function Chatted(msg,plr)
 		elseif string.lower(string.sub(msg,2,9)) == "bringbot" then
 			LPlr.Character:SetPrimaryPartCFrame(plr.Character.HumanoidRootPart.CFrame)
 		end
-    elseif string.lower(string.sub(msg,1,8)) == "!!prefix" then
-        if IsBot(plr) then
-            if string.len(string.lower(string.sub(msg,10,#msg))) > 1 then
+    	elseif string.lower(string.sub(msg,1,8)) == "!!prefix" then
+        	if IsBot(plr) then
+            		if string.len(string.lower(string.sub(msg,10,#msg))) > 1 then
 				Chat("ERROR: Invalid prefix, prefix remains as "..Prefix)
 			elseif string.lower(string.sub(msg,10,10)) == "" then
 				Chat("ERROR: No prefix specified, prefix remains as "..Prefix)
@@ -191,7 +193,7 @@ local function Chatted(msg,plr)
 				Prefix = string.lower(string.sub(msg,10,10))
 				Chat("Prefix successfully changed to "..Prefix)
 			end
-        end
+        	end
 	end	
 end
 
