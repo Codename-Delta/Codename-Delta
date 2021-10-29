@@ -3,14 +3,14 @@
 getgenv().tips = true
 
 local Prefix = ":"
-local BotVersion = "Codename Delta - v0.2.1a"
+local BotVersion = "Codename Delta - v0.2.1b"
 local Blacklist = {}
 local Players = {}
 local LPlr = game:GetService("Players").LocalPlayer
 local mode = 2
 
 function LChat(msg) --local chat
-	game.StarterGui:SetCore("ChatMakeSystemMessage", {Text = "[Codename Delta]: "..msg;Color = Color3.fromRGB(77, 166, 255)})	
+	game.StarterGui:SetCore("ChatMakeSystemMessage", {Text = "["..BotVersion.."]: "..msg;Color = Color3.fromRGB(77, 166, 255)})	
 end
 
 function Chat(msg) -- normal chat
@@ -105,7 +105,9 @@ local function Chatted(msg,plr)
 		elseif string.lower(string.sub(msg,2,5)) == "trip" then
 			LPlr.Character.Humanoid.Sit = true
 		elseif string.lower(string.sub(msg,2,5)) == "goto" then
-			if game.Players:FindFirstChild(string.sub(msg,7,#msg)) then
+			if string.sub(msg,7,#msg) == LPlr.Name then
+				Chat("ERROR: Going to bot is forbidden")
+			elseif game.Players:FindFirstChild(string.sub(msg,7,#msg)) then
 				if LPlr.Character.Humanoid.JumpPower < 50 then
 					LPlr.Character.Humanoid.JumpPower = 50
 				end
@@ -160,7 +162,7 @@ local function Chatted(msg,plr)
 					table.insert(Blacklist,blacklisting)
 					Chat(blacklisting.." is now blacklisted.")
 				else
-					Chat("Player does not exist")
+					Chat("ERROR: Player does not exist")
 				end
 			end
 		elseif string.lower(string.sub(msg,2,12)) == "unblacklist" then
@@ -171,9 +173,9 @@ local function Chatted(msg,plr)
 					Chat(blacklisting.." is no longer blacklisted.")
                 elseif blacklisting == "all" then
 					table.clear(Blacklist)
-					Chat("Everyone is no longer blacklisted.")
+					Chat("Blacklist has been reset")
                 else
-					Chat("Player is not blacklisted")
+					Chat("ERROR: Player is not blacklisted")
 				end
 			end
 		elseif string.lower(string.sub(msg,2,6)) == "reset" then
@@ -194,7 +196,7 @@ local function Chatted(msg,plr)
             		if string.len(string.lower(string.sub(msg,10,#msg))) > 1 then
 				Chat("ERROR: Invalid prefix, prefix remains as "..Prefix)
 			elseif string.lower(string.sub(msg,10,10)) == "" then
-				Chat("ERROR: No prefix specified, prefix remains as "..Prefix)
+				Chat("ERROR: Prefix not specified, prefix remains as "..Prefix)
 			else
 				Prefix = string.lower(string.sub(msg,10,10))
 				Chat("Prefix successfully changed to "..Prefix)
@@ -211,11 +213,11 @@ local function Tips()
 	end
 end
 
-LChat("Thank you for using Codename Delta, the bot will start shortly.")
+LChat("Thank you for using Codename Delta, the bot will start soon.")
 task.wait(3)
 
 LPlr.Character.Humanoid.Health = 0
-Chat("Welcome to "..BotVersion.."! Type "..Prefix.."help for a list of commands.")
+Chat("Welcome to "..BotVersion.."! Type "..Prefix.."help for a list of basic commands.")
 coroutine.wrap(Tips)
 
 while true do
