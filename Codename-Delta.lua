@@ -206,7 +206,7 @@ end
 local function Tips()
 	while mode == 2 and getgenv().tips do
 		task.wait(math.random(55,115))
-		local tip = math.random(1,8)
+		local tip = math.random(1,9)
 		if mode == 2 then GetTip(tip) end
 	end
 end
