@@ -2,6 +2,8 @@
 -- put this first and then script / loadstring
 getgenv().tips = true
 
+
+
 local Prefix = ":"
 local BotVersion = "Codename Delta - v0.2.1b"
 local Blacklist = {}
@@ -204,7 +206,6 @@ local function Chatted(msg,plr)
         	end
 	end	
 end
-
 local function Tips()
 	while mode == 2 and getgenv().tips do
 		task.wait(math.random(55,115))
