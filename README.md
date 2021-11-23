@@ -9,7 +9,7 @@
 
 #### Once you have the executor, open the script in it and execute it!
 
-###### (unless you put it in a game, then u can just run the game and it will happen)
+###### (unless you put it in a game, then u can just run the game and it will happen (it needs to be in a local script))
 
 ## How to help with development
 
