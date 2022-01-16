@@ -1,7 +1,7 @@
-# <span align="center">Codename Delta</span>
+<h1 align="center">Codename Delta</h1>
 
 <p align="center"><img src="Icon.png" alt="a icon" width=350px height=350px></p>
-### <span align="center">Latest version: v0.2.2-dev1</span>
+<h3 align="center">Latest version: v0.2.2-dev1</h3>
 
 ## How to use
 
