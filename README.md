@@ -1,7 +1,7 @@
 # Codename Delta
 
 <p align="center"><img src="Icon.png" alt="a icon" width=350px height=350px></p>
-<h3 align="center">Latest version: [CONFIDENTIAL]</h3>
+<h3 align="center">Latest version: v0.2.2-dev1</h3>
 
 ## How to use
 
@@ -9,9 +9,9 @@
 
 ## Script
 
-#### loadstring(game:HttpGet("https://raw.githubusercontent.com/jwklong/Codename-Delta/main/Codename-Delta.lua", true))()
+##### loadstring(game:HttpGet("https://raw.githubusercontent.com/jwklong/Codename-Delta/main/Codename-Delta.lua", true))()
 
-#### Once you have the executor, open the script in it and execute it!
+#### If you use a executor, copy the above script into it and run!
 
 ###### (unless you put it in a game, then u can just run the game and it will happen if it is in game.StarterPlayer.StarterPlayerScripts)
 
