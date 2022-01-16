@@ -3,7 +3,7 @@
 getgenv().tips = true
 
 local Prefix = ":"
-local BotVersion = "Codename Delta - Unnamed Testing Build"
+local BotVersion = "Codename Delta - v0.2.2-dev1"
 local Blacklist = {}
 local Players = {}
 local LPlr = game:GetService("Players").LocalPlayer
@@ -228,7 +228,7 @@ while true do
 		if not table.find(Blacklist,player.Name) and not table.find(Players,player.Name) then
 			table.insert(Players,player.Name)
 			player.Chatted:Connect(function(msg)
-				if mode == 2 or (mode == 1 and player.Name = LPlr.Name) then Chatted(msg,player) end
+				if mode == 2 or (mode == 1 and player.Name == LPlr.Name) then Chatted(msg,player) end
 			end)
             game.Players.ChildRemoved:Connect(function(plr)
             	if plr.Name == player.Name then table.remove(Players,table.find(Players,plr.Name)) end
