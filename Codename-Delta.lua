@@ -2,24 +2,19 @@
 -- put this first and then script / loadstring
 getgenv().tips = true
 
-
-
 local Prefix = ":"
-local BotVersion = "Codename Delta - v0.2.1b"
+local BotVersion = "Codename Delta - v0.2.2-dev1"
 local Blacklist = {}
 local Players = {}
 local LPlr = game:GetService("Players").LocalPlayer
 local mode = 2
 
 function LChat(msg) --local chat
-	game.StarterGui:SetCore("ChatMakeSystemMessage", {Text = "["..BotVersion.."]: "..msg;Color = Color3.fromRGB(77, 166, 255)})	
+	game:GetService("StarterGui"):SetCore("ChatMakeSystemMessage", {Text = "[Codename Delta]: "..msg;Color = Color3.fromRGB(77, 166, 255)})	
 end
-
-function Chat(msg) -- normal chat
-	game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(msg,"All")
+function Chat(msg)
+	game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(msg,"All")
 end
-
-
 
 local function GetTip(tip)
 	if tip == 1 then
@@ -38,7 +33,7 @@ local function GetTip(tip)
 		Chat("TIP: When bot has been tripped using "..Prefix.."trip, you can do "..Prefix.."jump to untrip it.")
 	elseif tip == 8 then
 		Chat("TIP: When you use "..Prefix.."prefix, it changes the start of the command!")
-    elseif tip == 9 then
+  elseif tip == 9 then
 		Chat("TIP: You can test the bot by doing "..Prefix.."help testing, it may have some commands!")
 	elseif tip == 69420 then --funny easter egg
 		Chat("TIP: stop acting sussy")
@@ -183,11 +178,22 @@ local function Chatted(msg,plr)
 		elseif string.lower(string.sub(msg,2,6)) == "reset" then
 			if IsBot(plr) then
 				LPlr.Character.Humanoid.Health = 0
+                pcall(function()LPlr.Character:BreakJoints()end)
 			end
 		elseif string.lower(string.sub(msg,2,11)) == "invincible" then
 			if IsBot(plr) then --NOTE: you cannot be damaged unless you have bad network ownership (credits to Alpha-404 for script)
 				loadsting(game:HttpGet("https://raw.githubusercontent.com/Alpha-404/NC-REANIM-V2/main/V2.5.lua"))() 
 			end
+        elseif string.lower(string.sub(msg,2,5)) == "lock" then
+            if IsBot(plr) then
+                if mode == 2 then
+                    mode = 1
+                    Chat("Commands are now locked to bot user.")
+                elseif mode == 1 then
+                    mode = 2
+                    Chat("Commands have been unlocked.")
+                end
+            end
 		elseif string.lower(string.sub(msg,2,4)) == "tip" then
 			GetTip(tonumber(string.sub(msg,6,#msg)))
 		elseif string.lower(string.sub(msg,2,9)) == "bringbot" then
@@ -195,20 +201,21 @@ local function Chatted(msg,plr)
 		end
     	elseif string.lower(string.sub(msg,1,8)) == "!!prefix" then
         	if IsBot(plr) then
-            		if string.len(string.lower(string.sub(msg,10,#msg))) > 1 then
-				Chat("ERROR: Invalid prefix, prefix remains as "..Prefix)
-			elseif string.lower(string.sub(msg,10,10)) == "" then
-				Chat("ERROR: Prefix not specified, prefix remains as "..Prefix)
-			else
-				Prefix = string.lower(string.sub(msg,10,10))
-				Chat("Prefix successfully changed to "..Prefix)
+                if string.len(string.lower(string.sub(msg,10,#msg))) > 1 then
+				    Chat("ERROR: Invalid prefix, prefix remains as "..Prefix)
+			    elseif string.lower(string.sub(msg,10,10)) == "" then
+				    Chat("ERROR: Prefix not specified, prefix remains as "..Prefix)
+			    else
+				    Prefix = string.lower(string.sub(msg,10,10))
+				    Chat("Prefix successfully changed to "..Prefix)
+                end
 			end
-        	end
+        end
 	end	
 end
 local function Tips()
-	while mode == 2 and getgenv().tips do
-		task.wait(math.random(55,115))
+	while mode > 0 and getgenv().tips do
+		wait(math.random(55,115))
 		local tip = math.random(1,9)
 		if mode == 2 then GetTip(tip) end
 	end
@@ -218,6 +225,7 @@ LChat("Thank you for using Codename Delta, the bot will start soon.")
 task.wait(3)
 
 LPlr.Character.Humanoid.Health = 0
+pcall(function()LPlr.Character:BreakJoints()end)
 Chat("Welcome to "..BotVersion.."! Type "..Prefix.."help for a list of basic commands.")
 coroutine.wrap(Tips)
 
@@ -226,11 +234,11 @@ while true do
 		if not table.find(Blacklist,player.Name) and not table.find(Players,player.Name) then
 			table.insert(Players,player.Name)
 			player.Chatted:Connect(function(msg)
-				if mode == 2 then Chatted(msg,player) end
+				if mode == 2 or (mode == 1 and player.Name == LPlr.Name) then Chatted(msg,player) end
 			end)
-            game.Players.ChildRemoved:Connect(function(plr)
-            	if plr.Name == player.Name then table.remove(Players,table.find(Players,plr.Name)) end
-            end)
+      game.Players.ChildRemoved:Connect(function(plr)
+        if plr.Name == player.Name then table.remove(Players,table.find(Players,plr.Name)) end
+      end)
 		end
 	end
 	task.wait(0.1)
