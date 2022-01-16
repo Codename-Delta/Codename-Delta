@@ -7,6 +7,7 @@ local BotVersion = "Codename Delta - v0.2.2-dev1"
 local Blacklist = {}
 local Players = {}
 local LPlr = game:GetService("Players").LocalPlayer
+local mode = 2
 
 function LChat(msg) --local chat
 	game:GetService("StarterGui"):SetCore("ChatMakeSystemMessage", {Text = "[Codename Delta]: "..msg;Color = Color3.fromRGB(77, 166, 255)})	
@@ -14,7 +15,6 @@ end
 function Chat(msg)
 	game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(msg,"All")
 end
-local mode = 2
 
 local function GetTip(tip)
 	if tip == 1 then
@@ -33,7 +33,7 @@ local function GetTip(tip)
 		Chat("TIP: When bot has been tripped using "..Prefix.."trip, you can do "..Prefix.."jump to untrip it.")
 	elseif tip == 8 then
 		Chat("TIP: When you use "..Prefix.."prefix, it changes the start of the command!")
-    	elseif tip == 9 then
+  elseif tip == 9 then
 		Chat("TIP: You can test the bot by doing "..Prefix.."help testing, it may have some commands!")
 	elseif tip == 69420 then --funny easter egg
 		Chat("TIP: stop acting sussy")
@@ -51,8 +51,11 @@ function IsBot(plr)
     end
 end
 
+-- holy shit this function is so big
+-- please clean this up later 
+-- the if statements just make my eyes bleed
 local function Chatted(msg,plr)
-	if string.sub(msg,1,1) == Prefix and not table.find(Blacklist,plr.Name) then
+	if string.sub(msg,1,1) == Prefix and mode > 0 and not table.find(Blacklist,plr.Name) then
 		if string.lower(string.sub(msg,2,5)) == "help" then
 			-- to add more pages add extra 'elseif string.sub(msg, 7, #msg) == "page number/name here"' and it should work
 			if string.sub(msg, 7, #msg) == "1"  or string.sub(msg, 6, #msg) == "" then
@@ -80,7 +83,7 @@ local function Chatted(msg,plr)
 				LPlr.Character.Humanoid.JumpPower = 50
 			end
 			LPlr.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
-			wait()
+			task.wait()
 			LPlr.Character.Humanoid.JumpPower = oldjumppower
 		elseif string.lower(string.sub(msg,2,7)) == "prefix" then
 			if string.len(string.lower(string.sub(msg,9,#msg))) > 1 then
@@ -99,7 +102,9 @@ local function Chatted(msg,plr)
 		elseif string.lower(string.sub(msg,2,5)) == "trip" then
 			LPlr.Character.Humanoid.Sit = true
 		elseif string.lower(string.sub(msg,2,5)) == "goto" then
-			if game.Players:FindFirstChild(string.sub(msg,7,#msg)) then
+			if string.sub(msg,7,#msg) == LPlr.Name then
+				Chat("ERROR: Going to bot is forbidden")
+			elseif game.Players:FindFirstChild(string.sub(msg,7,#msg)) then
 				if LPlr.Character.Humanoid.JumpPower < 50 then
 					LPlr.Character.Humanoid.JumpPower = 50
 				end
@@ -145,7 +150,7 @@ local function Chatted(msg,plr)
 			if IsBot(plr) then
 				Chat("Bot has been turned off.")
                 LChat("Hope you enjoyed using this bot!")
-				mode = off
+				mode = 0
 			end
 		elseif string.lower(string.sub(msg,2,10)) == "blacklist" then
 			if IsBot(plr) then
@@ -154,7 +159,7 @@ local function Chatted(msg,plr)
 					table.insert(Blacklist,blacklisting)
 					Chat(blacklisting.." is now blacklisted.")
 				else
-					Chat("Player does not exist")
+					Chat("ERROR: Player does not exist")
 				end
 			end
 		elseif string.lower(string.sub(msg,2,12)) == "unblacklist" then
@@ -165,9 +170,9 @@ local function Chatted(msg,plr)
 					Chat(blacklisting.." is no longer blacklisted.")
                 elseif blacklisting == "all" then
 					table.clear(Blacklist)
-					Chat("Everyone is no longer blacklisted.")
+					Chat("Blacklist has been reset")
                 else
-					Chat("Player is not blacklisted")
+					Chat("ERROR: Player is not blacklisted")
 				end
 			end
 		elseif string.lower(string.sub(msg,2,6)) == "reset" then
@@ -194,20 +199,20 @@ local function Chatted(msg,plr)
 		elseif string.lower(string.sub(msg,2,9)) == "bringbot" then
 			LPlr.Character:SetPrimaryPartCFrame(plr.Character.HumanoidRootPart.CFrame)
 		end
-    elseif string.lower(string.sub(msg,1,8)) == "!!prefix" then
-        if IsBot(plr) then
-            if string.len(string.lower(string.sub(msg,10,#msg))) > 1 then
-				Chat("ERROR: Invalid prefix, prefix remains as "..Prefix)
-			elseif string.lower(string.sub(msg,10,10)) == "" then
-				Chat("ERROR: No prefix specified, prefix remains as "..Prefix)
-			else
-				Prefix = string.lower(string.sub(msg,10,10))
-				Chat("Prefix successfully changed to "..Prefix)
+    	elseif string.lower(string.sub(msg,1,8)) == "!!prefix" then
+        	if IsBot(plr) then
+                if string.len(string.lower(string.sub(msg,10,#msg))) > 1 then
+				    Chat("ERROR: Invalid prefix, prefix remains as "..Prefix)
+			    elseif string.lower(string.sub(msg,10,10)) == "" then
+				    Chat("ERROR: Prefix not specified, prefix remains as "..Prefix)
+			    else
+				    Prefix = string.lower(string.sub(msg,10,10))
+				    Chat("Prefix successfully changed to "..Prefix)
+                end
 			end
         end
 	end	
 end
-
 local function Tips()
 	while mode > 0 and getgenv().tips do
 		wait(math.random(55,115))
@@ -216,13 +221,14 @@ local function Tips()
 	end
 end
 
-LChat("Thank you for using Codename Delta, the bot will start shortly.")
-wait(3)
+LChat("Thank you for using Codename Delta, the bot will start soon.")
+task.wait(3)
 
 LPlr.Character.Humanoid.Health = 0
 pcall(function()LPlr.Character:BreakJoints()end)
-Chat("Welcome to "..BotVersion.."! Type "..Prefix.."help for a list of commands.")
-spawn(Tips)
+Chat("Welcome to "..BotVersion.."! Type "..Prefix.."help for a list of basic commands.")
+coroutine.wrap(Tips)
+
 while true do
 	for _, player in pairs(game.Players:GetChildren()) do
 		if not table.find(Blacklist,player.Name) and not table.find(Players,player.Name) then
@@ -230,10 +236,10 @@ while true do
 			player.Chatted:Connect(function(msg)
 				if mode == 2 or (mode == 1 and player.Name == LPlr.Name) then Chatted(msg,player) end
 			end)
-            game.Players.ChildRemoved:Connect(function(plr)
-            	if plr.Name == player.Name then table.remove(Players,table.find(Players,plr.Name)) end
-            end)
+      game.Players.ChildRemoved:Connect(function(plr)
+        if plr.Name == player.Name then table.remove(Players,table.find(Players,plr.Name)) end
+      end)
 		end
 	end
-	wait(0.1)
+	task.wait(0.1)
 end
