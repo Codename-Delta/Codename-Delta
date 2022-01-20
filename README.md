@@ -1,4 +1,4 @@
-<p align="center"><img src="Icon.png" alt="a icon" width=350px height=350px><h1 align="center">Codename Delta</h1></p>
+b<p align="center"><img src="Icon.png" alt="a icon" width=350px height=350px><h1 align="right">Codename Delta</h1></p>
 <h3 align="center">Latest version: v0.2.2-dev1</h3>
 
 ## How to use
