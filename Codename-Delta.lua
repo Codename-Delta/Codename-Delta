@@ -51,33 +51,32 @@ function IsBot(plr)
     end
 end
 
--- holy shit this function is so big
--- please clean this up later 
--- the if statements just make my eyes bleed
 local function Chatted(msg,plr)
 	if string.sub(msg,1,1) == Prefix and mode > 0 and not table.find(Blacklist,plr.Name) then
-		if string.lower(string.sub(msg,2,5)) == "help" then
+		local values = string.split(string.sub(msg,2,string.len(msg))," ")
+		local command = string.lower(values[1])
+		if command == "help" then
 			-- to add more pages add extra 'elseif string.sub(msg, 7, #msg) == "page number/name here"' and it should work
-			if string.sub(msg, 7, #msg) == "1"  or string.sub(msg, 6, #msg) == "" then
+			if not (values[2]) or values[2] == "1" then
 				Chat("Prefix: "..Prefix.."  Page: 1  Commands: help (page), about, source, version, pages, jump, trip, prefix (new), say (text), goto (plr)")
-			elseif string.sub(msg, 7, #msg) == "2" then
-				Chat("Prefix: "..Prefix.."  Page: 2  Commands: bringbot")
-			elseif string.sub(msg, 7, #msg) == "bot-only" then
+			elseif values[2] == "2" then
+				Chat("Prefix: "..Prefix.."  Page: 2  Commands: bringbot, invincible")
+			elseif values[2] == "bot-only" then
 				Chat("Prefix: "..Prefix.."  Page: bot-only  Commands: stop, blacklist (plr), unblacklist (plr), reset, invincible")
-			elseif string.sub(msg, 7, #msg) == "testing" then
+			elseif values[2] == "testing" then
 				Chat("Prefix: "..Prefix.."  Page: testing  Commands: tip (num)")
 			else
 				Chat("ERROR: Page not found.")
 			end
-		elseif string.lower(string.sub(msg,2,8)) == "version" then
+		elseif command == "version" then
 			Chat("Version: "..BotVersion)
-		elseif string.lower(string.sub(msg,2,7)) == "source" then
+		elseif command == "source" then
 			Chat("The source is available on GitHub, just search Codename-Delta on it and click on the lua repository!")
-		elseif string.lower(string.sub(msg,2,7)) == "pages" then
+		elseif command == "pages" then
 			Chat("Pages: 1-2. Special Pages: bot-only, testing. How to use: Do "..Prefix.."help (page)")
-		elseif string.lower(string.sub(msg,2,6)) == "about" then
+		elseif command == "about" then
 			Chat("Codename Delta is a advanced bot that can respond at instantaneous speeds (if ping isn't very high) and do complex pathfinding calculations!")
-		elseif string.lower(string.sub(msg,2,5)) == "jump" then
+		elseif command == "jump" then
 			local oldjumppower = LPlr.Character.Humanoid.JumpPower * 0.5 * 2 --save old jump power
 			if oldjumppower < 50 then
 				LPlr.Character.Humanoid.JumpPower = 50
@@ -85,30 +84,30 @@ local function Chatted(msg,plr)
 			LPlr.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
 			task.wait()
 			LPlr.Character.Humanoid.JumpPower = oldjumppower
-		elseif string.lower(string.sub(msg,2,7)) == "prefix" then
-			if string.len(string.lower(string.sub(msg,9,#msg))) > 1 then
+		elseif command == "prefix" then
+			if string.len(values[2]) > 1 then
 				Chat("ERROR: Invalid prefix, prefix remains as "..Prefix)
-			elseif string.lower(string.sub(msg,9,9)) == "" then
+			elseif not (values[2]) then
 				Chat("ERROR: No prefix specified, prefix remains as "..Prefix)
 			else
-				Prefix = string.lower(string.sub(msg,9,9))
+				Prefix = values[2]
 				Chat("Prefix successfully changed to "..Prefix)
 			end
             if plr.Name == LPlr.Name then
                 LChat("Trying to change your bot prefix, but it also changes another bot in the server? Do '!!prefix' if so.")
             end
-		elseif string.lower(string.sub(msg,2,4)) == "say" then
-			Chat(string.sub(msg,6,#msg).." - Said by "..plr.Name)
-		elseif string.lower(string.sub(msg,2,5)) == "trip" then
+		elseif command == "say" then
+			Chat(values[2].." - Said by "..plr.Name)
+		elseif command == "trip" then
 			LPlr.Character.Humanoid.Sit = true
-		elseif string.lower(string.sub(msg,2,5)) == "goto" then
-			if string.sub(msg,7,#msg) == LPlr.Name then
+		elseif command == "goto" then
+			if values[2] == LPlr.Name then
 				Chat("ERROR: Going to bot is forbidden")
-			elseif game.Players:FindFirstChild(string.sub(msg,7,#msg)) then
+			elseif game.Players:FindFirstChild(values[2]) then
 				if LPlr.Character.Humanoid.JumpPower < 50 then
 					LPlr.Character.Humanoid.JumpPower = 50
 				end
-				local goto = game.Workspace[string.sub(msg,7,#msg)]
+				local goto = game.Workspace[values[2]]
 				local head = LPlr.Character.HumanoidRootPart
 				local human = LPlr.Character.Humanoid
 				local goalPosition = goto.HumanoidRootPart.Position
@@ -146,15 +145,15 @@ local function Chatted(msg,plr)
 			else
 				Chat("ERROR: Player not found.")
 			end
-		elseif string.lower(string.sub(msg,2,5)) == "stop" then
+		elseif command == "stop" then
 			if IsBot(plr) then
 				Chat("Bot has been turned off.")
                 LChat("Hope you enjoyed using this bot!")
 				mode = 0
 			end
-		elseif string.lower(string.sub(msg,2,10)) == "blacklist" then
+		elseif command == "blacklist" then
 			if IsBot(plr) then
-				local blacklisting = string.split(msg," ")[2]
+				local blacklisting = values[2]
 				if game.Players:FindFirstChild(blacklisting) then
 					table.insert(Blacklist,blacklisting)
 					Chat(blacklisting.." is now blacklisted.")
@@ -162,9 +161,9 @@ local function Chatted(msg,plr)
 					Chat("ERROR: Player does not exist")
 				end
 			end
-		elseif string.lower(string.sub(msg,2,12)) == "unblacklist" then
+		elseif command == "unblacklist" then
 			if IsBot(plr) then
-				local blacklisting = string.split(msg," ")[2]
+				local blacklisting = values[2]
 				if table.find(Blacklist,blacklisting) then
 					table.remove(Blacklist,table.find(Blacklist,blacklisting))
 					Chat(blacklisting.." is no longer blacklisted.")
@@ -175,16 +174,16 @@ local function Chatted(msg,plr)
 					Chat("ERROR: Player is not blacklisted")
 				end
 			end
-		elseif string.lower(string.sub(msg,2,6)) == "reset" then
+		elseif command == "reset" then
 			if IsBot(plr) then
 				LPlr.Character.Humanoid.Health = 0
                 pcall(function()LPlr.Character:BreakJoints()end)
 			end
-		elseif string.lower(string.sub(msg,2,11)) == "invincible" then
+		elseif command == "invincible" then
 			if IsBot(plr) then --NOTE: you cannot be damaged unless you have bad network ownership (credits to Alpha-404 for script)
 				loadsting(game:HttpGet("https://raw.githubusercontent.com/Alpha-404/NC-REANIM-V2/main/V2.5.lua"))() 
 			end
-        elseif string.lower(string.sub(msg,2,5)) == "lock" then
+        elseif command == "lock" then
             if IsBot(plr) then
                 if mode == 2 then
                     mode = 1
@@ -194,21 +193,20 @@ local function Chatted(msg,plr)
                     Chat("Commands have been unlocked.")
                 end
             end
-		elseif string.lower(string.sub(msg,2,4)) == "tip" then
-			GetTip(tonumber(string.sub(msg,6,#msg)))
-		elseif string.lower(string.sub(msg,2,9)) == "bringbot" then
+		elseif command == "tip" then
+			GetTip(tonumber(values[2]))
+		elseif command == "bringbot" then
 			LPlr.Character:SetPrimaryPartCFrame(plr.Character.HumanoidRootPart.CFrame)
 		end
-    	elseif string.lower(string.sub(msg,1,8)) == "!!prefix" then
-        	if IsBot(plr) then
-                if string.len(string.lower(string.sub(msg,10,#msg))) > 1 then
-				    Chat("ERROR: Invalid prefix, prefix remains as "..Prefix)
-			    elseif string.lower(string.sub(msg,10,10)) == "" then
-				    Chat("ERROR: Prefix not specified, prefix remains as "..Prefix)
-			    else
-				    Prefix = string.lower(string.sub(msg,10,10))
-				    Chat("Prefix successfully changed to "..Prefix)
-                end
+    elseif string.lower(string.sub(msg,1,8)) == "!!prefix" then
+        if IsBot(plr) then
+            if string.len(string.lower(string.sub(msg,10,#msg))) > 1 then
+			    Chat("ERROR: Invalid prefix, prefix remains as "..Prefix)
+			elseif string.lower(string.sub(msg,10,10)) == "" then
+				Chat("ERROR: Prefix not specified, prefix remains as "..Prefix)
+			else
+			    Prefix = string.lower(string.sub(msg,10,10))
+			    Chat("Prefix successfully changed to "..Prefix)
 			end
         end
 	end	
