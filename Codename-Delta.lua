@@ -33,7 +33,7 @@ local function GetTip(tip)
 		Chat("TIP: When bot has been tripped using "..Prefix.."trip, you can do "..Prefix.."jump to untrip it.")
 	elseif tip == 8 then
 		Chat("TIP: When you use "..Prefix.."prefix, it changes the start of the command!")
-  elseif tip == 9 then
+  	elseif tip == 9 then
 		Chat("TIP: You can test the bot by doing "..Prefix.."help testing, it may have some commands!")
 	elseif tip == 69420 then --funny easter egg
 		Chat("TIP: stop acting sussy")
@@ -43,8 +43,8 @@ local function GetTip(tip)
 end
 
 function IsBot(plr)
-    if plr.Name == LPlr.Name or plr.Name == "CodenameDelta" then
-        return true
+    if plr.Name == LPlr.Name or plr.Name == "SmartBotTest" then
+   		return true
     else
         Chat("ERROR: This is a bot only command.")
         return false
