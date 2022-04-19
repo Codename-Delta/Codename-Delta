@@ -20,21 +20,21 @@ local function GetTip(tip)
 	if tip == 1 then
 		Chat("TIP: Use "..Prefix.."help to view the list of commands.")
 	elseif tip == 2 then
-		Chat("TIP: Use "..Prefix.."goto (plr) to use the advanced pathfinding this bot includes!")
+		Chat("TIP: Use "..Prefix.."goto (plr) to see what the advanced pathfinding can do!")
 	elseif tip == 3 then
-		Chat("TIP: The "..Prefix.."jump command can sometimes make the bot double jump if said when jumping!")
+		Chat("TIP: The "..Prefix.."jump command can make the bot double jump if said while jumping!")
 	elseif tip == 4 then
-		Chat("TIP: The "..Prefix.."say command can do lots of spaces at once, try doing '"..Prefix.."say te     st'")
+		Chat("TIP: The "..Prefix.."say command can do lots of spaces at once, try doing '"..Prefix.."say te     st'.")
 	elseif tip == 5 then
-		Chat("TIP: Codename-Delta will get updated lots on GitHub, do "..Prefix.."source for more info!")
+		Chat("TIP: Codename Delta is available on GitHub, do "..Prefix.."source for more info!")
 	elseif tip == 6 then
-		Chat("TIP: "..Prefix.."pages will show how many pages are in help, and you can use them by doing "..Prefix.."help (page)")
+		Chat("TIP: "..Prefix.."pages will show how many pages are in help, and you can use them by doing "..Prefix.."help (page).")
 	elseif tip == 7 then
 		Chat("TIP: When bot has been tripped using "..Prefix.."trip, you can do "..Prefix.."jump to untrip it.")
 	elseif tip == 8 then
-		Chat("TIP: When you use "..Prefix.."prefix, it changes the start of the command!")
-  elseif tip == 9 then
-		Chat("TIP: You can test the bot by doing "..Prefix.."help testing, it may have some commands!")
+		Chat("TIP: When you use "..Prefix.."prefix, it changes the prefix of the command!")
+	elseif tip == 9 then
+		Chat("TIP: You can help test the bot by doing "..Prefix.."help testing, it has commands to test the bot's features!")
 	elseif tip == 69420 then --funny easter egg
 		Chat("TIP: stop acting sussy")
 	else
@@ -221,7 +221,7 @@ local function Tips()
 	end
 end
 
-LChat("Thank you for using Codename Delta, the bot will start soon.")
+LChat("Thank you for executing Codename Delta, the bot will start soon.")
 task.wait(3)
 
 LPlr.Character.Humanoid.Health = 0
@@ -241,5 +241,5 @@ while true do
       end)
 		end
 	end
-	task.wait(0.1)
+	task.wait()
 end
